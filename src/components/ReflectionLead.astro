@@ -1,0 +1,57 @@
+---
+// The reflection a list leads with, printed as a dark sheet like the featured adventure:
+// the post's own crop of the plate on one side, its title, standfirst and a way in on the other.
+import Arrow from './Arrow.astro';
+import { metaLine, plateFocus, summaryOf, type Post } from '../lib/posts';
+
+interface Props {
+  post: Post;
+  crafts?: boolean;
+  headingLevel?: 'h2' | 'h3';
+  /** Which Piranesi plate to show: the one the page's own header doesn't use. */
+  art?: 'wheel' | 'drawbridge';
+}
+const { post, crafts = true, headingLevel = 'h2', art = 'wheel' } = Astro.props;
+const plate = art === 'wheel'
+  ? { src: '/art/wheel-tall.webp', width: 1200, height: 1601 }
+  : { src: '/art/drawbridge-plate.webp', width: 1400, height: 1884 };
+const Heading = headingLevel;
+const href = `/blog/${post.id}/`;
+---
+<article class="lead">
+  <a class="plate" href={href} tabindex="-1" aria-hidden="true">
+    <img src={plate.src} width={plate.width} height={plate.height} alt="" loading="lazy" style={`object-position:${plateFocus(post)}`} />
+  </a>
+  <div class="copy">
+    <Heading class="title"><a href={href}>{post.data.title}</a></Heading>
+    <p class="standfirst">{summaryOf(post)}</p>
+    <p class="meta">{metaLine(post, { crafts })}</p>
+    <a class="action" href={href} aria-hidden="true" tabindex="-1">Read the reflection <Arrow /></a>
+  </div>
+</article>
+
+<style>
+  .lead {
+    background: var(--ink);
+    color: var(--stock);
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+  .plate { display: block; position: relative; min-height: 240px; background: var(--ink); overflow: hidden; }
+  .plate img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .copy { padding: clamp(28px, 4vw, 56px); display: grid; align-content: center; gap: 16px; justify-items: start; }
+  .title { font-size: clamp(2.5rem, 4.4vw, 3.75rem); text-wrap: balance; }
+  .title a { text-decoration: none; }
+  .title a:hover { color: var(--ochre); }
+  .standfirst { font-size: 1.25rem; line-height: 1.45; max-width: 44ch; color: var(--stock); }
+  .meta { font: 700 1rem/1.3 var(--display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ochre); }
+  .action { color: var(--ochre); margin-top: 4px; }
+  .action:hover { color: var(--stock); }
+  .lead:has(.title a:hover) .action :global(svg) { transform: translateX(4px); }
+  .lead :focus-visible { outline-color: var(--ochre); }
+
+  @media (max-width: 760px) {
+    .lead { grid-template-columns: 1fr; }
+    .plate { min-height: 0; aspect-ratio: 16 / 7; }
+  }
+</style>

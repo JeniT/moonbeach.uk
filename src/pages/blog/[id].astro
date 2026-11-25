@@ -1,0 +1,193 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import Arrow from '../../components/Arrow.astro';
+import { render } from 'astro:content';
+import { getPosts, craftsOf, fmtDate, plateFocus, readingTime, summaryOf, tagHref, tagLabel, tagSlug, type Post } from '../../lib/posts';
+import { doors, tagline } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((entry, i) => ({
+    params: { id: entry.id },
+    // Newer and older posts of the same kind, so reflections lead to reflections.
+    props: {
+      entry,
+      newer: posts.slice(0, i).reverse().find((p) => p.data.kind === entry.data.kind),
+      older: posts.slice(i + 1).find((p) => p.data.kind === entry.data.kind),
+      recent: posts.filter((p) => p !== entry).slice(0, 4),
+    },
+  }));
+}
+
+interface Props { entry: Post; newer?: Post; older?: Post; recent: Post[]; }
+const { entry, newer, older, recent } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const isReflection = d.kind === 'reflection';
+const postCrafts = craftsOf(entry);
+const meta = [
+  fmtDate(d.date),
+  isReflection ? 'Reflection' : 'Journal',
+  ...postCrafts.map((c) => c.label),
+  ...(isReflection ? [`${readingTime(entry)} min read`] : []),
+].join(' · ');
+
+// Where to go next, chosen by what the post is about: the home page's doors, then the blog.
+const next = [
+  ...(postCrafts.length
+    ? postCrafts.map((c) => doors[c.tag])
+    : [{ title: 'About me', text: tagline, href: '/about/', action: 'More about me' }]),
+  doors.blog,
+];
+---
+<Base title={d.title} description={summaryOf(entry)}>
+  <PageHead
+    title={d.title}
+    lede={isReflection ? summaryOf(entry) : undefined}
+    meta={meta}
+    focus={plateFocus(entry)}
+    size="post"
+  />
+
+  <div class="body">
+    <article class="prose"><Content /></article>
+    <aside aria-label="About this post">
+      <h2 class="by">By Bill Beacham</h2>
+      <p class="tagline">{tagline}</p>
+      <a class="action" href="/about/">About me <Arrow /></a>
+      {d.link && (
+        <a class="action out" href={d.link} rel="noopener">{d.linkLabel ?? 'Visit the site'} <Arrow /></a>
+      )}
+      {recent.length > 0 && (
+        <nav class="recent" aria-labelledby="recent-h">
+          <h2 id="recent-h">Recent posts</h2>
+          <ul>
+            {recent.map((p) => (
+              <li><a href={`/blog/${p.id}/`}><b>{p.data.title}</b><span>{fmtDate(p.data.date)}</span></a></li>
+            ))}
+          </ul>
+        </nav>
+      )}
+      {d.tags.length > 0 && (
+        <nav class="tags" aria-labelledby="tags-h">
+          <h2 id="tags-h">Tagged</h2>
+          <ul>
+            {[...new Set(d.tags.map(tagSlug))].map((t) => (
+              <li><a href={tagHref(t)}>{tagLabel(t)}</a></li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </aside>
+  </div>
+
+  {(newer || older) && (
+    <nav class="pager" aria-label={isReflection ? 'More reflections' : 'More from the journal'}>
+      {older ? (
+        <a class="older" href={`/blog/${older.id}/`}>
+          <span class="dir">Earlier {isReflection ? 'reflection' : 'in the journal'}</span>
+          <b>{older.data.title}</b>
+        </a>
+      ) : <span />}
+      {newer && (
+        <a class="newer" href={`/blog/${newer.id}/`}>
+          <span class="dir">Later {isReflection ? 'reflection' : 'in the journal'}</span>
+          <b>{newer.data.title}</b>
+        </a>
+      )}
+    </nav>
+  )}
+
+  <section class="next" aria-label="Where next">
+    {next.map((n) => (
+      <a class="door" href={n.href}>
+        <h2>{n.title}</h2>
+        <p>{n.text}</p>
+        <span class="action">{n.action} <Arrow /></span>
+      </a>
+    ))}
+  </section>
+</Base>
+
+<style>
+  .body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 18rem);
+    gap: 48px clamp(40px, 7vw, 120px);
+    padding: clamp(48px, 7vw, 96px) var(--gutter);
+    align-items: start;
+  }
+  aside {
+    position: sticky; top: 24px;
+    border-top: var(--rule);
+    padding-top: 16px;
+    display: grid; gap: 14px; justify-items: start;
+  }
+  .by { font-size: 1.625rem; }
+  .tagline { color: var(--ink-soft); font-size: 1rem; margin-top: -6px; }
+  .recent { width: 100%; border-top: var(--rule); padding-top: 14px; margin-top: 10px; }
+  .recent h2 { font-size: 1.25rem; letter-spacing: 0.06em; color: var(--rust); }
+  .recent ul { list-style: none; padding: 0; margin-top: 6px; }
+  .recent a { display: grid; gap: 4px; padding: 10px 0; border-bottom: 1px solid color-mix(in srgb, var(--ink) 30%, transparent); text-decoration: none; }
+  .recent b { font: 700 1.1875rem/1.1 var(--display); text-transform: uppercase; text-wrap: balance; }
+  .recent span { font-size: 0.875rem; color: var(--ink-soft); }
+  .recent a:hover b { color: var(--rust); }
+  aside .action { color: var(--rust); padding-block: 4px; }
+  .out { display: block; border-top: 1px solid color-mix(in srgb, var(--ink) 30%, transparent); padding-top: 14px !important; width: 100%; line-height: 1.2; }
+  .out :global(svg) { display: inline-block; vertical-align: -0.2em; margin-left: 0.35em; }
+  .tags { width: 100%; border-top: var(--rule); padding-top: 14px; margin-top: 10px; }
+  .tags h2 { font-size: 1.25rem; letter-spacing: 0.06em; color: var(--rust); }
+  .tags ul { list-style: none; padding: 0; margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  .tags a {
+    display: inline-block; padding: 6px 0;
+    font: 700 1.0625rem/1 var(--display); letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink); text-decoration-color: var(--rust); text-decoration-thickness: 2px; text-underline-offset: 4px;
+  }
+  .tags a:hover { color: var(--rust); }
+
+  /* Earlier and later posts, ruled like the ledger. */
+  .pager {
+    display: grid; grid-template-columns: 1fr 1fr;
+    margin: 0 var(--gutter);
+    border-top: var(--rule);
+  }
+  .pager a { display: grid; gap: 8px; padding: 20px 0 clamp(40px, 6vw, 72px); text-decoration: none; }
+  .newer { text-align: right; justify-items: end; border-left: 1px solid color-mix(in srgb, var(--ink) 30%, transparent); padding-left: 24px !important; }
+  .older { padding-right: 24px !important; }
+  .dir { font: 700 1rem/1 var(--display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rust); }
+  .pager b { font: 900 clamp(1.5rem, 2.6vw, 2.25rem)/1.02 var(--display); text-transform: uppercase; text-wrap: balance; }
+  .pager a:hover b { color: var(--rust); }
+
+  /* Doors onward, printed in rust. */
+  .next {
+    background: var(--rust);
+    color: var(--stock);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  }
+  .door {
+    display: grid; align-content: start; gap: 12px;
+    padding: clamp(32px, 4vw, 56px) var(--gutter);
+    text-decoration: none;
+    transition: background-color 0.4s var(--ease);
+  }
+  .door + .door { border-left: 2px solid color-mix(in srgb, var(--stock) 35%, transparent); }
+  .door h2 { font-size: clamp(2.25rem, 4vw, 3.25rem); }
+  .door p { color: var(--stock); max-width: 34ch; }
+  .door .action { margin-top: 8px; }
+  .door:hover { background: var(--ink); }
+  .door:hover .action { color: var(--ochre); }
+  .door:focus-visible { outline: 3px solid var(--stock); outline-offset: -6px; }
+
+  @media (max-width: 900px) {
+    .body { grid-template-columns: 1fr; }
+    aside { position: static; }
+  }
+  @media (max-width: 640px) {
+    .pager { grid-template-columns: 1fr; }
+    .newer { text-align: left; justify-items: start; border-left: 0; padding-left: 0 !important; border-top: 1px solid color-mix(in srgb, var(--ink) 30%, transparent); }
+    .pager a { padding-bottom: 28px; }
+    .door + .door { border-left: 0; border-top: 2px solid color-mix(in srgb, var(--stock) 35%, transparent); }
+  }
+</style>

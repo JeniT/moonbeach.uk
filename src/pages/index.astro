@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+import Poster from '../components/Poster.astro';
+import Arrow from '../components/Arrow.astro';
+import TableBand from '../components/TableBand.astro';
+import FeaturedAdventure from '../components/FeaturedAdventure.astro';
+import { getPosts } from '../lib/posts';
+import { blogLede } from '../lib/site';
+import { doors } from '../lib/site';
+import career from '../data/career.json';
+
+const highlights = career
+  .flatMap((era) => era.games.map((g) => ({ ...g, studio: era.studio })))
+  .filter((g) => g.featured)
+  .sort((a, b) => b.year - a.year);
+const shipped = career.reduce((n, era) => n + era.games.length, 0);
+
+const recent = (await getPosts()).slice(0, 4);
+// Day and month; the year too once a post is from an earlier year.
+const thisYear = new Date().getFullYear();
+const short = (d: Date) => d.toLocaleDateString('en-GB', d.getFullYear() === thisYear ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'short', year: 'numeric' });
+---
+<Base>
+  <Poster
+    imprint="After Piranesi, <i>The Drawbridge</i>, Carceri plate VII, c.1750"
+    lineOne="Spaces"
+    lineTwo="to play in"
+    doors={[
+      doors['video-games'],
+      doors.tabletop,
+    ]}
+  />
+
+  <section class="ledger" aria-labelledby="shipped">
+    <div class="ledger-intro">
+      <h2 id="shipped">{shipped} games shipped</h2>
+      <p>
+        Designer, producer and design director at Eurocom, Eidos and Square Enix. I pitched the
+        original <i>Life is Strange</i> and helped grow it into a seven-title franchise.
+      </p>
+      <a class="action" href="/video-games/">The full portfolio <Arrow /></a>
+    </div>
+    <ol class="titles">
+      {highlights.map((g) => (
+        <li>
+          <span class="year">{g.year}</span>
+          <span class="title">{g.title}</span>
+          <span class="studio">{g.studio}</span>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <TableBand />
+
+  <FeaturedAdventure allLink />
+
+  {recent.length > 0 && (
+    <section class="ledger writing" aria-labelledby="writing-h">
+      <div class="ledger-intro">
+        <h2 id="writing-h">Posts on the craft</h2>
+        <p>{blogLede}</p>
+        <a class="action" href="/blog/">Read the blog <Arrow /></a>
+      </div>
+      <ol class:list={['titles', { 'with-years': recent.some((p) => p.data.date.getFullYear() !== thisYear) }]}>
+        {recent.map((p) => (
+          <li>
+            <a href={`/blog/${p.id}/`}>
+              <time class="year" datetime={p.data.date.toISOString()}>{short(p.data.date)}</time>
+              <span class="title">{p.data.title}</span>
+              <span class="studio">{p.data.kind === 'reflection' ? 'Reflection' : 'Journal'}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )}
+</Base>
+
+<style>
+  /* The ledger of shipped games. */
+  .ledger {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    gap: 32px clamp(32px, 6vw, 96px);
+    padding: clamp(56px, 8vw, 112px) var(--gutter);
+  }
+  .ledger-intro h2 { font-size: clamp(3rem, 6vw, 5rem); color: var(--rust); }
+  .ledger-intro p { margin: 20px 0 24px; font-size: 1.1875rem; max-width: 40ch; }
+  .ledger-intro .action { color: var(--rust); }
+  .titles { list-style: none; padding: 0; border-top: var(--rule); }
+  .titles li {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 4px 20px;
+    padding: 14px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 35%, transparent);
+  }
+  .year { font: 700 1.375rem/1 var(--display); color: var(--rust); }
+  .title { font: 700 clamp(1.5rem, 2.3vw, 1.875rem)/1.05 var(--display); text-transform: uppercase; }
+  .studio { color: var(--ink-soft); font-size: 0.9375rem; text-align: right; }
+
+  /* Recent writing, ruled exactly like the games ledger; each row is a link. */
+  .writing .titles li { display: block; padding: 0; }
+  .writing .titles a {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 4px 20px;
+    padding: 14px 0;
+    text-decoration: none;
+  }
+  .writing .titles a:hover .title { color: var(--rust); }
+  .writing .with-years a { grid-template-columns: 7.5rem minmax(0, 1fr) auto; }
+  .writing .year { font-size: 1.125rem; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  @media (max-width: 960px) {
+    .ledger { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    .titles li, .writing .titles a { grid-template-columns: 3.5rem minmax(0, 1fr); }
+    .writing .with-years a { grid-template-columns: 5rem minmax(0, 1fr); }
+    .studio { grid-column: 2; text-align: left; }
+  }
+</style>

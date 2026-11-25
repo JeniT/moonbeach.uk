@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start here – moonbeach.uk</title>
+<style>
+  :root {
+    --ink: #24180f; --rust: #7c3522; --ochre: #cf8f3a; --stock: #f0e2c4;
+    --stock-deep: #e6d3ab; --ink-soft: #5a3d2b; --stock-soft: #d9c7a3;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--stock); }
+  body {
+    margin: 0; color: var(--ink); background: var(--stock);
+    font: 17px/1.6 "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  header { background: var(--ink); color: var(--stock); padding: 40px 24px 32px; }
+  header div, main { max-width: 760px; margin: 0 auto; }
+  h1, h2, h3 { font-family: "Arial Narrow", "Segoe UI", sans-serif; font-stretch: condensed; text-transform: uppercase; line-height: 1; letter-spacing: 0.01em; }
+  h1 { font-size: clamp(2.5rem, 7vw, 4rem); margin: 0 0 12px; }
+  h1 span { color: var(--ochre); }
+  header p { color: var(--stock-soft); margin: 0; font-size: 1.125rem; max-width: 56ch; }
+  main { padding: 16px 24px 80px; }
+  h2 { font-size: 2.25rem; margin: 56px 0 8px; padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
+  h2 small { display: block; font-family: "Segoe UI", system-ui, sans-serif; font-stretch: normal; text-transform: none; font-size: 1rem; color: var(--ink-soft); letter-spacing: 0; margin-top: 8px; }
+  h3 { font-size: 1.5rem; margin: 32px 0 6px; color: var(--rust); }
+  a { color: var(--rust); text-underline-offset: 0.2em; }
+  ol.steps { padding-left: 1.4em; }
+  ol.steps > li { margin: 14px 0; padding-left: 6px; }
+  ol.steps > li::marker { font-weight: 700; color: var(--rust); }
+  code, kbd {
+    font-family: Consolas, "Cascadia Mono", monospace; font-size: 0.92em;
+    background: var(--stock-deep); padding: 1px 6px;
+  }
+  kbd { border: 1px solid var(--ink-soft); border-bottom-width: 2px; }
+  pre { background: var(--ink); color: var(--stock); padding: 16px 18px; overflow-x: auto; font: 0.95rem/1.5 Consolas, "Cascadia Mono", monospace; }
+  .tip { background: var(--stock-deep); padding: 14px 18px; margin: 18px 0; }
+  .tip strong:first-child { color: var(--rust); }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.97rem; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 12px 10px 0; border-bottom: 1px solid color-mix(in srgb, var(--ink) 30%, transparent); }
+  th { font-family: "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 0.06em; color: var(--rust); border-bottom: 2px solid var(--ink); }
+  td:first-child { white-space: nowrap; }
+  .toc { list-style: none; padding: 0; columns: 2; column-gap: 32px; }
+  .toc li { margin: 4px 0; }
+  @media (max-width: 600px) { .toc { columns: 1; } td:first-child { white-space: normal; } }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>moonbeach.uk<br><span>Start here</span></h1>
+    <p>How to preview the website on your own computer, look around, and make changes. Allow about 20 minutes the first time. After that, it's one double-click.</p>
+  </div>
+</header>
+
+<main>
+  <ul class="toc">
+    <li><a href="#unzip">1. Unzip the folder</a></li>
+    <li><a href="#node">2. Install Node.js</a></li>
+    <li><a href="#vscode">3. Install VS Code (the editor)</a></li>
+    <li><a href="#preview">4. Preview the site</a></li>
+    <li><a href="#where">5. Where everything lives</a></li>
+    <li><a href="#edit">6. Making changes</a></li>
+    <li><a href="#trouble">7. If something goes wrong</a></li>
+    <li><a href="#publish">8. Publishing your changes</a></li>
+    <li><a href="#extra">9. Optional extras</a></li>
+  </ul>
+
+  <h2 id="unzip">1. Unzip the folder<small>So the site has a permanent home on your computer.</small></h2>
+  <ol class="steps">
+    <li>Before unzipping, <strong>right-click the zip file</strong>, choose <strong>Properties</strong>, tick <strong>Unblock</strong> at the bottom (if it's there) and press <strong>OK</strong>. This stops Windows being suspicious of the files inside.</li>
+    <li>Make a folder for websites, for example <code>C:\Users\<em>your name</em>\Sites</code>. Open File Explorer, go to your user folder (the one containing Documents and Downloads) and create a new folder called <code>Sites</code>.</li>
+    <li>Right-click the zip, choose <strong>Extract All…</strong>, and extract it into that <code>Sites</code> folder. You should end up with the site folder (called <code>billbeacham.com</code> in the zip). Once the site is on GitHub you'll swap this for a copy from GitHub Desktop: see <a href="#publish">step 8</a>.</li>
+  </ol>
+  <p class="tip"><strong>Why not Documents or the Desktop?</strong> On many Windows computers those folders are synced to OneDrive. The site's tools create thousands of small files, and OneDrive syncing them slows everything down and can cause errors.</p>
+
+  <h2 id="node">2. Install Node.js<small>The engine that builds and previews the site. You never need to open it directly.</small></h2>
+  <ol class="steps">
+    <li>Go to <a href="https://nodejs.org">nodejs.org</a> and download the <strong>LTS</strong> version for Windows (the <strong>Windows Installer (.msi)</strong>). LTS means "long-term support", the steady version.</li>
+    <li>Run the installer and click <strong>Next</strong> through it, accepting the defaults.</li>
+    <li>On the screen titled <strong>Tools for Native Modules</strong>, leave the box <strong>unticked</strong>. The site doesn't need those extra tools.</li>
+    <li>When it finishes, <strong>restart your computer</strong>. Windows only notices newly installed tools after a restart.</li>
+  </ol>
+
+  <h2 id="vscode">3. Install VS Code<small>A free editor from Microsoft for the posts (Markdown), the games list (JSON) and the page files (.astro).</small></h2>
+  <ol class="steps">
+    <li>Go to <a href="https://code.visualstudio.com">code.visualstudio.com</a> and click <strong>Download for Windows</strong>.</li>
+    <li>Run the installer. On the <strong>Select Additional Tasks</strong> screen, tick <strong>Add "Open with Code" action to Windows Explorer directory context menu</strong>. That lets you right-click the site folder and open it straight in VS Code.</li>
+    <li>Open VS Code, choose <strong>File → Open Folder…</strong> and pick the site folder. If it asks <em>"Do you trust the authors of the files in this folder?"</em>, choose <strong>Yes, I trust the authors</strong>.</li>
+    <li>A message will pop up in the bottom right recommending the <strong>Astro</strong> extension. Click <strong>Install</strong>. It colours and checks the <code>.astro</code> page files. (If you miss the message: click the four-squares icon on the left, search for <em>Astro</em>, and install the one by <em>Astro</em>.)</li>
+  </ol>
+
+  <h2 id="preview">4. Preview the site<small>This is the bit you'll do every time.</small></h2>
+  <ol class="steps">
+    <li>In the site folder, double-click <strong>Preview the site.bat</strong>.</li>
+    <li>If Windows shows a blue box saying <em>"Windows protected your PC"</em>, click <strong>More info</strong>, then <strong>Run anyway</strong>. It only asks once.</li>
+    <li>A black window opens. <strong>The first time</strong>, it downloads the building blocks the site needs, which takes a minute or two. After that, it starts in a few seconds.</li>
+    <li>Your web browser opens at <a href="http://localhost:4321">http://localhost:4321</a>. That's the site, running privately on your computer. Nobody else can see it.</li>
+    <li>Leave the black window open while you work. <strong>Whenever you save a change in VS Code, the page in your browser updates by itself.</strong></li>
+    <li>When you've finished, close the black window to stop the preview.</li>
+  </ol>
+  <p class="tip"><strong>Prefer VS Code's own terminal?</strong> In VS Code, choose <strong>Terminal → New Terminal</strong> and type <code>npm run dev</code>, then press <kbd>Enter</kbd>. Hold <kbd>Ctrl</kbd> and click the <code>localhost:4321</code> link it shows. Press <kbd>Ctrl</kbd>+<kbd>C</kbd> in the terminal to stop it.</p>
+
+  <h2 id="where">5. Where everything lives<small>You'll mostly work in the <code>src</code> folder.</small></h2>
+  <table>
+    <thead><tr><th>To change…</th><th>Open…</th></tr></thead>
+    <tbody>
+      <tr><td>Reflections and journal entries</td><td><code>src/content/posts/</code>: one Markdown (<code>.md</code>) file per blog post</td></tr>
+      <tr><td>Adventures</td><td><code>src/content/adventures/</code>: one <code>.md</code> file per adventure (shown on the For the table page)</td></tr>
+      <tr><td>The games portfolio</td><td><code>src/data/career.json</code>: studios, games, the "featured" panels and their figures</td></tr>
+      <tr><td>Wording on a page</td><td><code>src/pages/</code>: e.g. <code>index.astro</code> (the home page), <code>about.astro</code>, <code>video-games/index.astro</code>, <code>tabletop/index.astro</code>, <code>tabletop/at-the-table.astro</code>, <code>tabletop/for-the-table/index.astro</code></td></tr>
+      <tr><td>Menu and footer</td><td><code>src/layouts/Base.astro</code></td></tr>
+      <tr><td>Images and downloads</td><td><code>public/art/</code> and <code>public/downloads/</code></td></tr>
+    </tbody>
+  </table>
+  <p>You can ignore <code>node_modules</code>, <code>.astro</code>, <code>.impeccable</code> and <code>.vscode</code>: they're the site's machinery. <code>README.md</code> has a quick reference for adding things. The design rules (colours, type and so on) are written up in a <code>DESIGN.md</code> file that's kept off GitHub; Jeni has it if anyone works on the look later.</p>
+
+  <h2 id="edit">6. Making changes</h2>
+
+  <h3>Writing a new blog post</h3>
+  <ol class="steps">
+    <li>In VS Code, open <code>src/content/posts/</code>, right-click <code>_example.md</code> and choose <strong>Copy</strong>, then right-click the <code>posts</code> folder and choose <strong>Paste</strong>.</li>
+    <li>Rename the copy (right-click → <strong>Rename</strong>) to something short with hyphens, e.g. <code>running-a-heist.md</code>. This becomes the web address: <code>/blog/running-a-heist/</code>. Don't start the name with an underscore: files starting with <code>_</code> are ignored.</li>
+    <li>Edit the details at the top, between the two <code>---</code> lines:
+<pre>---
+title: "Running a heist"
+date: 2026-12-01
+kind: reflection      # reflection (in-depth) or journal (quick note)
+summary: "One or two sentences for the list of posts."
+tags: [tabletop]      # video-games and/or tabletop also show it on those pages; any other tag gets its own page
+draft: false          # true hides it from the site
+---</pre>
+      For a journal entry you can also add a link: <code>link: https://…</code> and <code>linkLabel: "What the link is"</code>.</li>
+    <li>Write the note underneath. Blank lines separate paragraphs; <code>## A heading</code> makes a subheading; <code>*italics*</code>, <code>**bold**</code> and <code>[link text](https://…)</code> work as you'd expect.</li>
+    <li>Save (<kbd>Ctrl</kbd>+<kbd>S</kbd>) and look at <a href="http://localhost:4321/blog/">localhost:4321/blog</a>.</li>
+  </ol>
+  <p class="tip"><strong>See it as you write:</strong> with a <code>.md</code> file open, press <kbd>Ctrl</kbd>+<kbd>K</kbd> then <kbd>V</kbd> to show a formatted preview beside it.</p>
+
+  <h3>Editing the games list (JSON)</h3>
+  <p>JSON is fussy about punctuation, so a few rules:</p>
+  <ul>
+    <li>Text always goes in <strong>straight double quotes</strong>: <code>"title": "Just Cause 4"</code>.</li>
+    <li>Items in a list are separated by <strong>commas</strong>, but there's <strong>no comma after the last one</strong>.</li>
+    <li>VS Code underlines mistakes with a <strong>red squiggle</strong>; hover over it to see what's wrong. If the preview window shows an error after you save, it's almost always a missing or extra comma.</li>
+    <li>To give a game the sliding panel, copy an existing <code>"detail": { … }</code> block from another game and edit it.</li>
+  </ul>
+
+  <h3>Changing wording on a page (.astro)</h3>
+  <p>The part between the two <code>---</code> lines at the top is code: best left alone. Below it, change only the words <strong>between</strong> tags, like <code>&lt;p&gt;<strong>this text</strong>&lt;/p&gt;</code>. Leave anything in <code>&lt; &gt;</code> or <code>{ }</code> as it is. If something breaks, <kbd>Ctrl</kbd>+<kbd>Z</kbd> undoes it.</p>
+
+  <h3>Printing a picture in the site's colours</h3>
+  <p>The Piranesi plates and the adventure covers are re-printed in the site's four inks (dark brown, rust, ochre and cream). You can do the same to any picture. It's a simple program, not AI, and it works best on engravings, woodcuts and line drawings; photos come out looking like screen prints.</p>
+  <ol class="steps">
+    <li>Put the original picture in a folder called <code>originals</code> inside the site folder (make it the first time), e.g. <code>originals/my-cover.jpg</code>.</li>
+    <li>In VS Code, open the terminal (<strong>Terminal → New Terminal</strong>) and type:
+<pre>npm run ink -- originals/my-cover.jpg</pre>
+      The printed version is saved as <code>public/art/my-cover.webp</code>, ready to use as <code>/art/my-cover.webp</code>, for example as an adventure's <code>cover</code>.</li>
+    <li>If it's too dark or too light, run it again with <code>--light</code>: a smaller number lightens it, a bigger one darkens it (it starts at 0.72), e.g. <code>npm run ink -- originals/my-cover.jpg --light 0.6</code>. <code>--width 900</code> makes it smaller.</li>
+    <li>Only use artwork that's public domain or yours, and credit the artist.</li>
+  </ol>
+
+  <h2 id="trouble">7. If something goes wrong</h2>
+  <table>
+    <thead><tr><th>What you see</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td>Yellow "npm warn" lines during the first run</td><td>Harmless. As long as the browser opens afterwards, ignore them.</td></tr>
+      <tr><td>"Node.js is not installed yet"</td><td>Install Node.js (step 2), then <strong>restart the computer</strong>.</td></tr>
+      <tr><td>"'npm' is not recognized…"</td><td>Same: restart the computer after installing Node.js.</td></tr>
+      <tr><td>"…running scripts is disabled on this system" (in VS Code's terminal)</td><td>Use <strong>Preview the site.bat</strong> instead, or in VS Code click the small <strong>⌄</strong> next to the <strong>+</strong> above the terminal and choose <strong>Command Prompt</strong>.</td></tr>
+      <tr><td>The browser says the site can't be reached</td><td>Check the black preview window is still open. If you closed it, double-click the <code>.bat</code> file again.</td></tr>
+      <tr><td>A red error page in the browser after saving</td><td>It names the file and line. Usually a missing comma in JSON or a deleted <code>---</code> or quote mark in a note. Fix it and save again.</td></tr>
+      <tr><td>"Port 4321 is in use"</td><td>An old preview is still running. Close all black preview windows and try again.</td></tr>
+      <tr><td>The preview keeps showing an old version</td><td>Close the preview window, delete the <code>.astro</code> folder inside <code>billbeacham.com</code>, and start the preview again.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="publish">8. Publishing your changes<small>Your copy on GitHub is the website: send changes there and moonbeach.uk updates itself.</small></h2>
+  <p>The site lives in a public GitHub repository. Every time you send ("push") changes to it, GitHub rebuilds the site and publishes it to <a href="https://moonbeach.uk">moonbeach.uk</a>, usually within two minutes. You do this with <strong>GitHub Desktop</strong>, a free app with buttons rather than commands.</p>
+
+  <h3>Once: get your copy from GitHub</h3>
+  <ol class="steps">
+    <li>Install <a href="https://desktop.github.com">GitHub Desktop</a> and sign in with the GitHub account Jeni set up for you.</li>
+    <li>Choose <strong>File → Clone repository…</strong>, pick <strong>moonbeach.uk</strong> from the list, and set the <strong>Local path</strong> to your <code>Sites</code> folder (not Documents or the Desktop, as in step 1). Click <strong>Clone</strong>.</li>
+    <li>From now on, work in this new folder: open it in VS Code and run <strong>Preview the site.bat</strong> from it. The first preview downloads the building blocks again, as before. The old unzipped folder can then be deleted.</li>
+  </ol>
+
+  <h3>Every time: publish what you've changed</h3>
+  <ol class="steps">
+    <li>Make your changes and check them in the preview as usual.</li>
+    <li>Open GitHub Desktop. The left-hand list shows every file you've changed; click one to see exactly what's different.</li>
+    <li>Bottom left, type a short note in <strong>Summary</strong>, e.g. <em>New journal post: The Hidden Isle</em>, and click <strong>Commit to main</strong>.</li>
+    <li>Click <strong>Push origin</strong> at the top. That's it: the site updates in a minute or two.</li>
+  </ol>
+  <p class="tip"><strong>Not ready to publish a post?</strong> Leave <code>draft: true</code> at the top. It's saved to GitHub but stays off the site. Because the repository is public, though, anyone looking at GitHub itself could read a draft: keep anything truly private off it.</p>
+  <p class="tip"><strong>Did it work?</strong> On GitHub, the repository's <strong>Actions</strong> tab shows each publish: a green tick means it's live; a red cross means the build failed (usually a mistake in a post's details) and the old version stays up. Run the preview, fix whatever it complains about, and push again.</p>
+  <p class="tip"><strong>Working on two computers?</strong> Click <strong>Fetch origin</strong> (then <strong>Pull</strong>) in GitHub Desktop before you start, to get the latest version.</p>
+
+  <h2 id="extra">9. Optional extras</h2>
+  <h3>A nicer place to write</h3>
+  <p>VS Code does everything the site needs. If you'd like a calmer writing space for the posts themselves, <a href="https://obsidian.md">Obsidian</a> is free and works well: install it, choose <strong>Open folder as vault</strong>, and pick the <code>src\content</code> folder inside the site folder. It shows each note's details (title, date, kind…) as a tidy form at the top. Use it only for the <code>.md</code> files; keep using VS Code for the games list and the pages.</p>
+
+  <h3>Keeping a backup</h3>
+  <p>GitHub keeps every version of every file you've pushed, so it is your backup: in GitHub Desktop, <strong>History</strong> shows each change, and any of them can be undone. The only things not on GitHub are the private folders kept out on purpose (<code>inspiration</code> and <code>originals</code>); back those up separately if you use them.</p>
+</main>
+</body>
+</html>

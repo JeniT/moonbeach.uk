@@ -1,0 +1,57 @@
+---
+// Writing about one craft, for the Video games and Tabletop pages: the same lead reflection,
+// ledger and journal band as the blog, cut down to the newest few.
+import Arrow from './Arrow.astro';
+import ReflectionLead from './ReflectionLead.astro';
+import ReflectionList from './ReflectionList.astro';
+import JournalBand from './JournalBand.astro';
+import { crafts, getPosts, leadOf } from '../lib/posts';
+
+interface Props {
+  tag: 'video-games' | 'tabletop';
+  heading: string;
+  intro: string;
+  journalIntro: string;
+}
+const { tag, heading, intro, journalIntro } = Astro.props;
+const craft = crafts.find((c) => c.tag === tag)!;
+
+const posts = await getPosts(tag);
+const reflections = posts.filter((p) => p.data.kind === 'reflection');
+const journal = posts.filter((p) => p.data.kind === 'journal');
+const lead = leadOf(reflections);
+const rest = reflections.filter((p) => p !== lead).slice(0, 2);
+---
+{posts.length > 0 && (
+  <section class:list={['writing', { 'no-reflections': !lead }]} aria-labelledby={`${tag}-writing-h`}>
+    <header>
+      <h2 id={`${tag}-writing-h`}>{heading}</h2>
+      <p>{intro}</p>
+    </header>
+    {/* The Tabletop page's poster is the Giant Wheel, so its lead shows the Drawbridge. */}
+    {lead && <ReflectionLead post={lead} crafts={false} headingLevel="h3" art={tag === 'tabletop' ? 'drawbridge' : 'wheel'} />}
+    {rest.length > 0 && <h3 class="sub">More reflections</h3>}
+    {rest.length > 0 && <ReflectionList posts={rest} crafts={false} headingLevel="h4" />}
+    {lead && <a class="action all" href={craft.href}>Everything I’ve written about {craft.label.toLowerCase()} <Arrow /></a>}
+  </section>
+)}
+
+<JournalBand
+  id={`${tag}-journal`}
+  posts={journal.slice(0, 3)}
+  crafts={false}
+  intro={journalIntro}
+  more={{ href: `${craft.href}#journal`, label: 'The full journal' }}
+/>
+
+<style>
+  .writing { padding: clamp(56px, 8vw, 112px) var(--gutter); }
+  /* With only journal entries, the heading introduces the journal band straight below. */
+  .no-reflections { padding-bottom: 0; }
+  .no-reflections header { margin-bottom: clamp(32px, 4vw, 48px); }
+  header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 48px; margin-bottom: 24px; padding-bottom: 14px; border-bottom: var(--rule); }
+  .sub { font-size: clamp(2rem, 3.4vw, 2.75rem); margin-top: clamp(36px, 5vw, 64px); padding-bottom: 12px; border-bottom: var(--rule); }
+  h2 { font-size: clamp(2.75rem, 5vw, 4rem); }
+  header p { color: var(--ink-soft); max-width: 46ch; }
+  .all { color: var(--rust); margin-top: 28px; }
+</style>

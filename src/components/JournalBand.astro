@@ -1,0 +1,161 @@
+---
+// The journal, printed as one rust band: the newest entries in full,
+// then any earlier ones as a short ruled list.
+import Arrow from './Arrow.astro';
+import { fmtDate, craftsOf, type Post } from '../lib/posts';
+import { render } from 'astro:content';
+
+interface Props {
+  posts: Post[];
+  full?: number;
+  crafts?: boolean;
+  heading?: string;
+  intro?: string;
+  more?: { href: string; label: string };
+  batch?: number;
+  id?: string;
+}
+const {
+  posts,
+  full = 3,
+  crafts = true,
+  heading = 'Journal',
+  intro = 'Things worth a look: games, news, and new finds for the shelf.',
+  more,
+  batch = 8,
+  id = 'journal',
+} = Astro.props;
+
+const latest = await Promise.all(
+  posts.slice(0, full).map(async (p) => ({ post: p, Content: (await render(p)).Content })),
+);
+const earlier = posts.slice(full);
+const stamp = (p: Post) => [fmtDate(p.data.date), ...(crafts ? craftsOf(p).map((c) => c.label) : [])].join(' · ');
+---
+{posts.length > 0 && (
+  <section class="band" id={id} aria-labelledby={`${id}-h`}>
+    <header>
+      <h2 id={`${id}-h`}>{heading}</h2>
+      <p>{intro}</p>
+    </header>
+
+    <ol class="latest" style={`--cols:${Math.max(1, latest.length)}`}>
+      {latest.map(({ post, Content }) => (
+        <li>
+          <article>
+            <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+            <p class="meta">{stamp(post)}</p>
+            <div class="body"><Content /></div>
+            {post.data.link && (
+              <a class="action out" href={post.data.link} rel="noopener">
+                {post.data.linkLabel ?? 'Visit the site'} <Arrow />
+              </a>
+            )}
+          </article>
+        </li>
+      ))}
+    </ol>
+
+    {earlier.length > 0 && (
+      <div class="earlier">
+        <h3>Earlier in the journal</h3>
+        <ol data-batch={batch}>
+          {earlier.map((p) => (
+            <li><a href={`/blog/${p.id}/`}><b>{p.data.title}</b><span>{stamp(p)}</span></a></li>
+          ))}
+        </ol>
+        {earlier.length > batch && (
+          <button class="more action" type="button" hidden>Show more of the journal <Arrow /></button>
+        )}
+      </div>
+    )}
+
+    {more && <a class="action all" href={more.href}>{more.label} <Arrow /></a>}
+  </section>
+)}
+
+<script>
+  import '../scripts/batch';
+</script>
+
+<style>
+  .band {
+    background: var(--rust);
+    color: var(--stock);
+    padding: clamp(48px, 7vw, 96px) var(--gutter);
+    scroll-margin-top: 16px;
+  }
+  header {
+    display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 48px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--stock);
+  }
+  h2 { font-size: clamp(2.75rem, 5vw, 4rem); }
+  header p { color: var(--stock-soft); max-width: 46ch; }
+
+  .latest {
+    list-style: none; padding: 0;
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    --pad: clamp(20px, 2.6vw, 36px);
+  }
+  .latest li { padding: 28px var(--pad) 0; }
+  .latest li:first-child { padding-left: 0; }
+  .latest li:last-child { padding-right: 0; }
+  .latest li + li { border-left: 1px solid color-mix(in srgb, var(--stock) 30%, transparent); }
+  /* A single entry reads at a comfortable measure rather than the full width. */
+  .latest[style*='--cols:1'] article { max-width: 40rem; }
+  article { display: grid; gap: 10px; align-content: start; }
+  article h3 { font-size: clamp(1.75rem, 2.4vw, 2.125rem); line-height: 1.02; text-wrap: balance; }
+  article h3 a { text-decoration: none; }
+  article h3 a:hover { color: var(--ochre); }
+  /* On rust the accent passes to stock; ochre is only a hover. */
+  .meta { font: 700 1rem/1.3 var(--display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--stock-soft); }
+  .body { display: grid; gap: 0.7em; }
+  .body :global(p) { font-size: 1rem; line-height: 1.6; }
+  .body :global(em) { color: var(--stock); }
+  .body :global(a) { color: var(--stock); }
+  .body :global(a:hover) { color: var(--ochre); }
+  .action { color: var(--stock); }
+  .action:hover { color: var(--ochre); }
+  /* Outbound links can run to two lines; keep the arrow with the last word. */
+  .out { display: inline-block; justify-self: start; margin-top: 6px; padding-block: 6px; line-height: 1.2; text-wrap: balance; }
+  .out :global(svg) { display: inline-block; vertical-align: -0.2em; margin-left: 0.35em; }
+  .band :focus-visible { outline-color: var(--stock); }
+
+  .earlier { margin-top: clamp(40px, 5vw, 64px); }
+  .earlier h3 { font-size: 1.625rem; padding-bottom: 10px; border-bottom: 2px solid var(--stock); }
+  .earlier ol { list-style: none; padding: 0; }
+  .earlier li a {
+    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 24px;
+    padding: 14px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--stock) 30%, transparent);
+    text-decoration: none;
+  }
+  .earlier b { font: 700 1.5rem/1.1 var(--display); text-transform: uppercase; }
+  .earlier span { font: 700 0.9375rem/1.3 var(--display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--stock-soft); }
+  .earlier li a:hover b { color: var(--ochre); }
+
+  .more {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 0.5em;
+    font: 700 1.125rem/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--stock);
+    padding: 14px 0; margin-top: 8px;
+  }
+  .more[hidden] { display: none; }
+  .more:hover { color: var(--ochre); }
+  .more :global(svg) { width: 1.1em; height: 1.1em; transform: rotate(90deg); transition: transform 0.4s var(--ease); }
+  .more:hover :global(svg) { transform: rotate(90deg) translateX(4px); }
+  .more:focus-visible { outline: 3px solid var(--stock); outline-offset: 2px; }
+  .all { margin-top: clamp(32px, 4vw, 48px); }
+
+  @media (max-width: 900px) {
+    .latest { grid-template-columns: 1fr; }
+    .latest li { padding: 28px 0 0; }
+    .latest li + li { border-left: 0; border-top: 1px solid color-mix(in srgb, var(--stock) 30%, transparent); margin-top: 28px; }
+    article { max-width: 40rem; }
+  }
+</style>

@@ -1,0 +1,80 @@
+---
+// The Piranesi plate printed in four inks, with a slow drift as the page scrolls.
+// `focus` picks which part of the full plate an inner page shows.
+interface Props {
+  variant?: 'hero' | 'band';
+  art?: 'drawbridge' | 'wheel';
+  focus?: string;
+  height?: string;
+}
+const { variant = 'band', art = 'drawbridge', focus = '50% 40%', height } = Astro.props;
+const heroes = {
+  drawbridge: {
+    w: 2400, h: 1032, pos: '50% 45%',
+    alt: 'Piranesi’s imaginary prison: staircases, bridges and walkways crossing a vast vaulted hall, printed in brown, rust and ochre.',
+  },
+  wheel: {
+    w: 2400, h: 1129, pos: '50% 55%',
+    alt: 'Piranesi’s imaginary prison: a giant wheel arches over a hall of crumbling stone, printed in brown, rust and ochre.',
+  },
+};
+const hero = heroes[art];
+---
+<div class:list={['plate', variant]} style={height ? `--h:${height}` : undefined}>
+  {variant === 'hero' ? (
+    <picture>
+      <source media="(max-width: 700px)" srcset={`/art/${art}-tall.webp`} />
+      <img
+        src={`/art/${art}-wide.webp`}
+        srcset={`/art/${art}-wide-1200.webp 1200w, /art/${art}-wide.webp 2400w`}
+        sizes="100vw"
+        width={hero.w} height={hero.h}
+        alt={hero.alt}
+        fetchpriority="high"
+        style={`object-position:${hero.pos}`}
+      />
+    </picture>
+  ) : (
+    <img
+      src="/art/drawbridge-plate.webp"
+      width="1400" height="1884"
+      alt=""
+      fetchpriority="high"
+      style={`object-position:${focus}`}
+    />
+  )}
+</div>
+
+<style>
+  .plate {
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+    height: var(--h, clamp(180px, 26vw, 340px));
+  }
+  .plate.hero { height: 100%; min-height: 260px; }
+  .plate img, .plate picture {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* The plate sits slightly oversized and drifts against the scroll,
+     like looking deeper into the hall. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .plate img {
+        height: 118%;
+        top: -9%;
+        animation: drift linear both;
+        animation-timeline: view();
+      }
+    }
+  }
+  @keyframes drift {
+    from { transform: translateY(-7%); }
+    to { transform: translateY(7%); }
+  }
+</style>

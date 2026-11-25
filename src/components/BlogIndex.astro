@@ -1,0 +1,158 @@
+---
+// Every blog listing page.
+//   view="recent"      /blog/              the lead reflection, a few more, and the newest journal entries
+//   view="reflections" /blog/reflections/  every reflection
+//   view="journal"     /blog/journal/      every journal entry, in full
+//   tag="…"            /blog/tag/…/        every reflection and journal entry with that tag
+import Base from '../layouts/Base.astro';
+import PageHead from './PageHead.astro';
+import Arrow from './Arrow.astro';
+import ReflectionLead from './ReflectionLead.astro';
+import ReflectionList from './ReflectionList.astro';
+import JournalBand from './JournalBand.astro';
+import JournalList from './JournalList.astro';
+import { crafts, getPosts, leadOf, tagHref, tagLabel } from '../lib/posts';
+import { blogLede } from '../lib/site';
+
+interface Props { view?: 'recent' | 'reflections' | 'journal'; tag?: string; }
+const { tag } = Astro.props;
+const view = tag ? 'tag' : (Astro.props.view ?? 'recent');
+const craft = crafts.find((c) => c.tag === tag);
+const label = tag ? tagLabel(tag) : undefined;
+
+const posts = await getPosts(tag);
+const reflections = posts.filter((p) => p.data.kind === 'reflection');
+const journal = posts.filter((p) => p.data.kind === 'journal');
+const lead = leadOf(reflections);
+const rest = reflections.filter((p) => p !== lead);
+
+// What the blog holds, then what it's about.
+const kinds = [
+  { href: '/blog/', label: 'Recent' },
+  { href: '/blog/reflections/', label: 'Reflections' },
+  { href: '/blog/journal/', label: 'Journal' },
+];
+const topics = [
+  ...crafts.map((c) => ({ href: c.href, label: c.label })),
+  ...(tag && !craft ? [{ href: tagHref(tag), label: label! }] : []),
+];
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+
+const heads = {
+  recent: { title: 'Blog', page: 'Blog', lede: blogLede, focus: '55% 85%' },
+  reflections: { title: 'Blog<br><span>Reflections</span>', page: 'Reflections', lede: 'Longer pieces on design, direction, and what it means to make games, newest first.', focus: '36% 52%' },
+  journal: { title: 'Blog<br><span>Journal</span>', page: 'Journal', lede: 'Things worth a look: games, news, and new finds for the shelf, newest first.', focus: '64% 22%' },
+  tag: {
+    title: `Blog<br><span>${label}</span>`,
+    page: `Blog: ${label}`,
+    lede: craft?.tag === 'tabletop'
+      ? 'Running games, writing adventures, and new finds for the shelf.'
+      : craft
+        ? 'Thirty years of making video games: what I’ve learned, and what I’m playing.'
+        : `Everything I’ve written about ${label?.toLowerCase()}.`,
+    focus: craft?.tag === 'tabletop' ? '72% 64%' : craft ? '28% 30%' : '84% 40%',
+  },
+};
+const head = heads[view];
+const RECENT = 4;
+---
+<Base
+  title={head.page}
+  description={label ? `Bill Beacham’s writing about ${label.toLowerCase()}.` : 'Bill Beacham’s reflections on game design and direction, and a journal of games, news and finds worth a look.'}
+>
+  <PageHead title={head.title} lede={head.lede} focus={head.focus} />
+
+  <nav class="filter" aria-label="Blog sections">
+    <ul>
+      {kinds.map((f) => (
+        <li><a href={f.href} aria-current={path === f.href ? 'page' : undefined}>{f.label}</a></li>
+      ))}
+    </ul>
+    <ul aria-label="Topics">
+      {topics.map((f) => (
+        <li><a href={f.href} aria-current={path === f.href ? 'page' : undefined}>{f.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+
+  {(view === 'recent' || view === 'tag') && (
+    <>
+      {lead && (
+        <div class="lead">
+          <ReflectionLead post={lead} crafts={!craft} headingLevel="h2" />
+        </div>
+      )}
+      <section class="reflections" id="reflections" aria-labelledby="ref-h">
+        {(rest.length > 0 || !lead) && <h2 id="ref-h">{lead ? 'More reflections' : 'Reflections'}</h2>}
+        {rest.length > 0 && (
+          view === 'recent'
+            ? <ReflectionList posts={rest.slice(0, RECENT)} crafts />
+            : <ReflectionList posts={rest} crafts={!craft} batch={10} />
+        )}
+        {!lead && (
+          <p class="empty">{label ? `No reflections about ${label.toLowerCase()} yet.` : 'The first reflections are on their way.'}</p>
+        )}
+        {view === 'recent' && reflections.length > 0 && (
+          <a class="action all" href="/blog/reflections/">All reflections <Arrow /></a>
+        )}
+      </section>
+      <JournalBand
+        posts={view === 'recent' ? journal.slice(0, 3) : journal}
+        crafts={!craft}
+        intro={craft?.tag === 'tabletop'
+          ? 'New games, new finds for the shelf, and news from the hobby.'
+          : 'Things worth a look: games, news, and new finds for the shelf.'}
+        more={{ href: '/blog/journal/', label: 'The full journal' }}
+      />
+    </>
+  )}
+
+  {view === 'reflections' && (
+    <section class="reflections archive" aria-label="All reflections">
+      {reflections.length
+        ? <ReflectionList posts={reflections} batch={12} headingLevel="h2" />
+        : <p class="empty">The first reflections are on their way.</p>}
+    </section>
+  )}
+
+  {view === 'journal' && (
+    <section class="reflections" aria-label="The full journal">
+      {journal.length
+        ? <JournalList posts={journal} batch={10} />
+        : <p class="empty">Nothing in the journal yet.</p>}
+    </section>
+  )}
+</Base>
+
+<style>
+  .filter {
+    padding: 20px var(--gutter) 0;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 4px clamp(20px, 3vw, 36px);
+  }
+  .filter ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 4px clamp(20px, 3vw, 36px); }
+  /* A short rule between what the blog holds and what it's about. */
+  .filter ul + ul { padding-left: clamp(20px, 3vw, 36px); border-left: 2px solid color-mix(in srgb, var(--ink) 30%, transparent); }
+  .filter a {
+    display: inline-block;
+    padding: 8px 0;
+    font: 700 1.25rem/1 var(--display);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-soft);
+    border-bottom: 2px solid transparent;
+  }
+  .filter a:hover { color: var(--rust); }
+  .filter a[aria-current='page'] { color: var(--rust); border-bottom-color: var(--rust); }
+
+  .lead { padding: clamp(24px, 3vw, 40px) var(--gutter) 0; }
+  .reflections { padding: clamp(40px, 6vw, 80px) var(--gutter) clamp(56px, 8vw, 112px); scroll-margin-top: 16px; }
+  .lead + .reflections:not(:has(> h2)) { padding-top: 24px; }
+  .reflections > h2 { font-size: clamp(2.75rem, 5vw, 4rem); padding-bottom: 14px; border-bottom: var(--rule); }
+  .all { color: var(--rust); margin-top: 28px; }
+  .archive :global(ol) { border-top: var(--rule); }
+  .empty { font-size: 1.125rem; color: var(--ink-soft); padding-top: 20px; }
+
+  @media (max-width: 560px) {
+    .filter ul + ul { padding-left: 0; border-left: 0; }
+  }
+</style>

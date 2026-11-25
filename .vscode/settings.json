@@ -1,0 +1,13 @@
+{
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": { "other": false, "comments": false, "strings": false }
+  },
+  "files.exclude": {
+    "node_modules": true,
+    "dist": true,
+    ".astro": true
+  },
+  "editor.formatOnSave": false,
+  "terminal.integrated.defaultProfile.windows": "Command Prompt"
+}

@@ -1,0 +1,72 @@
+---
+// A ruled ledger of reflections: title with its date, craft and reading time on the left,
+// the summary on the right (the same arrangement as the journal page).
+// With `batch`, long lists show that many at a time behind a "show more" link.
+import Arrow from './Arrow.astro';
+import { metaLine, summaryOf, type Post } from '../lib/posts';
+
+interface Props { posts: Post[]; crafts?: boolean; batch?: number; headingLevel?: 'h2' | 'h3' | 'h4'; }
+const { posts, crafts = true, batch, headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
+---
+<div class="ledger">
+  <ol data-batch={batch}>
+    {posts.map((p) => (
+      <li>
+        <Heading class="title"><a href={`/blog/${p.id}/`}>{p.data.title}</a></Heading>
+        <p class="meta">{metaLine(p, { crafts })}</p>
+        <p class="summary">{summaryOf(p)}</p>
+      </li>
+    ))}
+  </ol>
+  {batch && posts.length > batch && (
+    <button class="more action" type="button" hidden>Show more reflections <Arrow /></button>
+  )}
+</div>
+
+<script>
+  import '../scripts/batch';
+</script>
+
+<style>
+  ol { list-style: none; padding: 0; }
+  li {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'title summary' 'meta summary';
+    gap: 10px clamp(32px, 6vw, 96px);
+    align-items: start;
+    padding: 24px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  }
+  .title { grid-area: title; font-size: clamp(2rem, 3.2vw, 2.75rem); text-wrap: balance; }
+  /* The title link covers the whole row, so the row is one target but one short link name. */
+  .title a { text-decoration: none; }
+  .title a::after { content: ''; position: absolute; inset: 0; }
+  li:hover .title a { color: var(--rust); }
+  .title a:focus-visible { outline: none; }
+  li:has(.title a:focus-visible) { outline: 3px solid var(--rust); outline-offset: 4px; }
+  .summary { grid-area: summary; font-size: 1.125rem; max-width: 46ch; }
+  .meta { grid-area: meta; font: 700 1rem/1.3 var(--display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--rust); }
+
+  .more {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 0.5em;
+    font: 700 1.125rem/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--rust);
+    padding: 14px 0;
+    margin-top: 12px;
+  }
+  .more[hidden] { display: none; }
+  .more :global(svg) { width: 1.1em; height: 1.1em; transform: rotate(90deg); transition: transform 0.4s var(--ease); }
+  .more:hover :global(svg) { transform: rotate(90deg) translateX(4px); }
+  .more:focus-visible { outline: 3px solid var(--rust); outline-offset: 2px; }
+
+  @media (max-width: 760px) {
+    li { grid-template-columns: 1fr; grid-template-rows: none; grid-template-areas: 'title' 'meta' 'summary'; }
+  }
+</style>

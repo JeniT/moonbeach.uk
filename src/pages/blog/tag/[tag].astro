@@ -1,0 +1,17 @@
+---
+// A blog page for every tag used on a post, built automatically.
+// Video games and Tabletop always have a page, even before any post uses them.
+import BlogIndex from '../../../components/BlogIndex.astro';
+import { allTags, crafts } from '../../../lib/posts';
+
+export async function getStaticPaths() {
+  const tags = new Set([...crafts.map((c) => c.tag), ...(await allTags())]);
+  return [...tags].map((tag) => ({
+    params: { tag },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props;
+---
+<BlogIndex tag={tag} />

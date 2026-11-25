@@ -1,0 +1,145 @@
+---
+import '@fontsource/big-shoulders-display/latin-700';
+import '@fontsource/big-shoulders-display/latin-900';
+import '@fontsource-variable/figtree';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Bill Beacham: game designer and design director, and tabletop games master. Thirty years of shipped games, and long campaigns run online.',
+} = Astro.props;
+
+const pageTitle = title ? `${title} – Bill Beacham` : 'Bill Beacham – Spaces to play in';
+const path = Astro.url.pathname;
+const nav: { href: string; label: string }[] = [
+  { href: '/video-games/', label: 'Video games' },
+  { href: '/tabletop/', label: 'Tabletop' },
+  { href: '/blog/', label: 'Blog' },
+  { href: '/about/', label: 'About' },
+];
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#24180f" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={new URL(path, Astro.site)} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/art/drawbridge-wide-1200.webp', Astro.site)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="masthead">
+      {/* On the home page the masthead names the site; elsewhere it's the way home. */}
+      <a class="name" href="/" aria-current={path === '/' ? 'page' : undefined}>{path === '/' ? 'Bill Beacham' : 'Home'}</a>
+      <nav aria-label="Main">
+        <ul>
+          {nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="colophon">
+      <div class="reach">
+        <h2>Get in touch</h2>
+        <p>For design roles, consulting, or a seat at the table.</p>
+        <ul>
+          <li><a href="mailto:bill.beacham@gmail.com">bill.beacham@gmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/bill-beacham">LinkedIn</a></li>
+        </ul>
+      </div>
+      <p class="credit">
+        Artwork after Giovanni Battista Piranesi, <i>The Drawbridge</i>, from <i>Carceri d’Invenzione</i>, c.1750. Public domain.
+        <br />© {year} Bill Beacham. Game titles are trademarks of their respective owners.
+      </p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .masthead {
+    background: var(--ink);
+    color: var(--stock);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 28px;
+    padding: 14px var(--gutter);
+  }
+  .name[aria-current='page'] { color: var(--ochre); }
+  .name:hover { color: var(--ochre); }
+  .name {
+    font: 900 1.625rem/1 var(--display);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .masthead ul {
+    list-style: none; padding: 0;
+    display: flex; flex-wrap: wrap; gap: 4px clamp(14px, 2.2vw, 30px);
+  }
+  .masthead nav a {
+    display: inline-block;
+    padding: 6px 0;
+    font: 700 1.25rem/1 var(--display);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+  .masthead nav a:hover { color: var(--ochre); }
+  .masthead nav a[aria-current='page'] { color: var(--ochre); border-bottom-color: var(--ochre); }
+  @media (max-width: 560px) {
+    .masthead { padding-block: 12px 8px; }
+    .masthead nav { width: 100%; }
+    .masthead ul { justify-content: space-between; gap: 4px 10px; }
+    .masthead nav a { font-size: 1.0625rem; letter-spacing: 0.05em; padding: 8px 0; }
+  }
+
+  .colophon {
+    background: var(--ink);
+    color: var(--stock);
+    margin-top: var(--border);
+    padding: clamp(32px, 5vw, 64px) var(--gutter) 28px;
+    display: grid;
+    gap: 40px;
+  }
+  .reach h2 { font-size: clamp(3rem, 7vw, 5.5rem); color: var(--stock); }
+  .reach p { color: var(--stock-soft); margin: 12px 0 18px; font-size: 1.125rem; }
+  .reach ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 32px; }
+  .reach a {
+    font: 700 clamp(1.375rem, 2.6vw, 2rem)/1.2 var(--display);
+    letter-spacing: 0.04em;
+    color: var(--ochre);
+    text-decoration-thickness: 2px;
+    overflow-wrap: anywhere;
+  }
+  .reach a:hover { color: var(--stock); }
+  .credit {
+    border-top: 1px solid color-mix(in srgb, var(--stock) 35%, transparent);
+    padding-top: 18px;
+    font-size: 0.875rem;
+    color: var(--stock-soft);
+  }
+</style>

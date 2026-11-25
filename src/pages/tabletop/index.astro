@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import Poster from '../../components/Poster.astro';
+import TableBand from '../../components/TableBand.astro';
+import FeaturedAdventure from '../../components/FeaturedAdventure.astro';
+import PostsSection from '../../components/PostsSection.astro';
+---
+<Base title="Tabletop" description="Bill Beacham at the tabletop: long role-playing campaigns run online, adventures in progress, and writing about tabletop games.">
+  <Poster
+    art="wheel"
+    imprint="After Piranesi, <i>The Giant Wheel</i>, Carceri plate IX, c.1750"
+    lineOne="Worlds"
+    lineTwo="imagined"
+    doors={[
+      { href: '/tabletop/at-the-table/', title: 'What I run', text: 'Long campaigns and shorter series, run online for groups of friends old and new.', action: 'At the table' },
+      { href: '/tabletop/for-the-table/', title: 'What I write', text: 'Campaigns and scenarios I’m writing for my own tables, and for yours.', action: 'For the table' },
+    ]}
+  />
+
+  <TableBand />
+
+  <FeaturedAdventure allLink />
+
+  <PostsSection
+    tag="tabletop"
+    heading="Writing about tabletop games"
+    intro="Running games, writing adventures, and play at the table."
+    journalIntro="New games, new finds for the shelf, and news from the hobby."
+  />
+</Base>

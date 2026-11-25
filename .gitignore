@@ -1,0 +1,28 @@
+# Built and installed files: each computer (and GitHub) makes its own.
+node_modules/
+dist/
+.astro/
+
+# Private: never publish. The repository is public.
+inspiration/
+originals/
+.claude/
+# The design brief and design system (and the design tool's copies of them).
+PRODUCT.md
+DESIGN.md
+.impeccable/design.json
+.impeccable/surfaces/
+
+# Design-tool working files, not part of the site.
+.impeccable/critique/
+.impeccable/live/
+.impeccable/mocks/
+.impeccable/questions/
+.impeccable/review/
+.impeccable/hook.cache.json
+.impeccable/config.local.json
+
+# System clutter and zips sent back and forth.
+.DS_Store
+Thumbs.db
+*.zip

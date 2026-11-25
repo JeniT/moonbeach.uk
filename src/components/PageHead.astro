@@ -1,0 +1,48 @@
+---
+// Inner-page header: a band of the plate above a caption bar holding the title.
+import Plate from './Plate.astro';
+interface Props {
+  title: string;
+  lede?: string;
+  focus?: string;
+  /** A line of small facts under the lede (a post's date, craft and reading time). */
+  meta?: string;
+  /** 'post' sets a long headline a step smaller so it leaves room on the first screen. */
+  size?: 'page' | 'post';
+}
+const { title, lede, focus, meta, size = 'page' } = Astro.props;
+---
+<section class="pagehead">
+  <Plate focus={focus} />
+  <div class:list={['caption', size]}>
+    <h1 set:html={title} />
+    {(lede || meta) && (
+      <div class="side">
+        {lede && <p class="lede">{lede}</p>}
+        {meta && <p class="meta">{meta}</p>}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .caption {
+    background: var(--ink);
+    color: var(--stock);
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    align-items: end;
+    gap: 16px 40px;
+    padding: clamp(24px, 3.5vw, 40px) var(--gutter);
+  }
+  h1 { font-size: clamp(3.25rem, 8vw, 6rem); text-wrap: balance; }
+  .post h1 { font-size: clamp(2.75rem, 5.6vw, 4.75rem); }
+  .side { display: grid; gap: 14px; }
+  h1 :global(span) { color: var(--ochre); }
+  .lede { color: var(--stock-soft); font-size: 1.1875rem; max-width: 46ch; }
+  .post .lede { color: var(--stock); font-size: 1.25rem; line-height: 1.45; }
+  .meta { font: 700 1rem/1.3 var(--display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ochre); }
+  @media (max-width: 760px) {
+    .caption { grid-template-columns: 1fr; }
+  }
+</style>

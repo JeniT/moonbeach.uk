@@ -1,0 +1,379 @@
+[
+  {
+    "studio": "Square Enix External Studios",
+    "role": "Design Director",
+    "from": 2012,
+    "to": 2026,
+    "summary": "Design and narrative direction across externally developed games in Square Enix-owned IP, overseeing several franchises at once. Built and led a team of design and narrative specialists; pitched projects to Square Enix leadership and platform holders.",
+    "games": [
+      {
+        "title": "Life is Strange: Reunion",
+        "year": 2026
+      },
+      {
+        "title": "Life is Strange: Double Exposure",
+        "year": 2024
+      },
+      {
+        "title": "Outriders Worldslayer",
+        "year": 2022
+      },
+      {
+        "title": "Life is Strange: True Colors",
+        "year": 2021
+      },
+      {
+        "title": "Outriders",
+        "year": 2021,
+        "featured": true,
+        "detail": {
+          "developer": "People Can Fly",
+          "publisher": "Square Enix",
+          "blurb": "A co-operative RPG shooter, and a new IP, that drew millions of players in its first weeks.",
+          "part": "Design direction from the publisher side, on the launch game and its Worldslayer expansion, using live player data to look past forum noise to what players were actually doing.",
+          "stats": [
+            {
+              "value": "3.5M",
+              "label": "unique players in the first month"
+            },
+            {
+              "value": "30+",
+              "label": "hours average play per player"
+            },
+            {
+              "value": "73",
+              "label": "Metacritic for Worldslayer (PC)"
+            }
+          ],
+          "sources": [
+            {
+              "label": "Square Enix press release",
+              "url": "https://www.gamespress.com/SQUARE-ENIX-ANNOUNCES-OUTRIDERS-SURPASSES-35-MILLION-UNIQUE-PLAYERS-IN"
+            },
+            {
+              "label": "Metacritic",
+              "url": "https://www.metacritic.com/game/outriders-worldslayer/"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Just Cause 4",
+        "year": 2018
+      },
+      {
+        "title": "Life is Strange 2",
+        "year": 2018
+      },
+      {
+        "title": "The Awesome Adventures of Captain Spirit",
+        "year": 2018
+      },
+      {
+        "title": "Life is Strange: Before the Storm",
+        "year": 2017
+      },
+      {
+        "title": "Just Cause 3",
+        "year": 2015,
+        "featured": true,
+        "detail": {
+          "developer": "Avalanche Studios",
+          "publisher": "Square Enix",
+          "blurb": "Open-world chaos with a grappling hook, parachute and wingsuit, in one of Square Enix’s biggest action franchises.",
+          "part": "Design direction from the publisher side on Just Cause 3 and Just Cause 4, defining what made the series work and evolving it without losing it.",
+          "stats": [
+            {
+              "value": "26M+",
+              "label": "Just Cause series copies shipped by 2019"
+            },
+            {
+              "value": "73",
+              "label": "Metacritic, Just Cause 3 (PS4)"
+            },
+            {
+              "value": "2",
+              "label": "mainline games: Just Cause 3 and 4"
+            }
+          ],
+          "sources": [
+            {
+              "label": "Wikipedia (series figure)",
+              "url": "https://en.wikipedia.org/wiki/Just_Cause_(video_game_series)"
+            },
+            {
+              "label": "Metacritic",
+              "url": "https://www.metacritic.com/game/just-cause-3/"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Life is Strange",
+        "year": 2015,
+        "note": "Pitched the original game, then helped grow it into a seven-title franchise over twelve years.",
+        "featured": true,
+        "detail": {
+          "developer": "Dontnod Entertainment",
+          "publisher": "Square Enix",
+          "blurb": "An episodic story about time, friendship and consequence that became one of the defining narrative games of its decade.",
+          "part": "Oversaw design and narrative direction from the publisher side, across the original and the series that grew from it.",
+          "stats": [
+            {
+              "value": "20M+",
+              "label": "players of the original by 2023"
+            },
+            {
+              "value": "85",
+              "label": "Metacritic (PS4, Xbox One)"
+            },
+            {
+              "value": "BAFTA",
+              "label": "Best Story, 2016"
+            },
+            {
+              "value": "7",
+              "label": "franchise titles, 2015–2026"
+            }
+          ],
+          "sources": [
+            {
+              "label": "GamesRadar+",
+              "url": "https://www.gamesradar.com/the-original-life-is-strange-passes-20-million-players-after-eight-years"
+            },
+            {
+              "label": "Trusted Reviews",
+              "url": "https://www.trustedreviews.com/opinions/life-is-strange-an-interview-with-bafta-winning-studio-dontnod"
+            },
+            {
+              "label": "Wikipedia",
+              "url": "https://en.wikipedia.org/wiki/Life_Is_Strange_(video_game)"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Nosgoth",
+        "year": 2014
+      }
+    ]
+  },
+  {
+    "studio": "Square Enix London Studios",
+    "role": "Games Designer",
+    "from": 2009,
+    "to": 2012,
+    "summary": "Consultant designer on externally developed games: setting vision, goals and benchmarks, reviewing milestones and running focus groups and user testing.",
+    "games": [
+      {
+        "title": "Lara Croft and the Guardian of Light",
+        "year": 2010,
+        "featured": true,
+        "detail": {
+          "developer": "Crystal Dynamics",
+          "publisher": "Square Enix",
+          "blurb": "Lara reinvented as a co-operative, top-down action puzzler: a bold, downloadable spin on Tomb Raider.",
+          "part": "Consultant designer at Square Enix London Studios.",
+          "stats": [
+            {
+              "value": "85",
+              "label": "Metacritic (Xbox 360)"
+            },
+            {
+              "value": "1M+",
+              "label": "copies sold across platforms by 2013"
+            }
+          ],
+          "sources": [
+            {
+              "label": "Metacritic",
+              "url": "https://www.metacritic.com/game/lara-croft-and-the-guardian-of-light/"
+            },
+            {
+              "label": "Wikipedia",
+              "url": "https://en.wikipedia.org/wiki/Lara_Croft_and_the_Guardian_of_Light"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "studio": "Eidos Game Studios",
+    "role": "Games Designer",
+    "from": 2006,
+    "to": 2009,
+    "summary": "Consultant designer on internal and external projects, evolving existing franchises and developing new ones; presenting projects at greenlight.",
+    "games": [
+      {
+        "title": "Deus Ex: Human Revolution",
+        "year": 2011,
+        "featured": true,
+        "detail": {
+          "developer": "Eidos Montréal",
+          "publisher": "Square Enix",
+          "blurb": "The return of a landmark series: a cyberpunk immersive sim about choice, augmentation and who gets to be human.",
+          "part": "Consultant designer during development at Eidos.",
+          "stats": [
+            {
+              "value": "89",
+              "label": "Metacritic (PS3, Xbox 360, PC)"
+            },
+            {
+              "value": "2.18M",
+              "label": "copies sold in its first financial period"
+            }
+          ],
+          "sources": [
+            {
+              "label": "MCV",
+              "url": "https://www.mcvuk.com/business-news/profits-up-as-deus-ex-human-revolution-shifts-2-18m-copies/"
+            },
+            {
+              "label": "Wikipedia",
+              "url": "https://en.wikipedia.org/wiki/Deus_Ex:_Human_Revolution"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Batman: Arkham Asylum",
+        "year": 2009,
+        "featured": true,
+        "detail": {
+          "developer": "Rocksteady Studios",
+          "publisher": "Eidos Interactive and Warner Bros.",
+          "blurb": "The game that showed how good a superhero game could be: tight combat, stealth and a Metroidvania Arkham.",
+          "part": "Consultant designer at Eidos, the game’s co-publisher.",
+          "stats": [
+            {
+              "value": "92",
+              "label": "Metacritic (Xbox 360)"
+            },
+            {
+              "value": "Guinness",
+              "label": "World Record: most critically acclaimed superhero game"
+            },
+            {
+              "value": "4.3M",
+              "label": "copies sold worldwide by 2011"
+            }
+          ],
+          "sources": [
+            {
+              "label": "Gematsu",
+              "url": "https://gematsu.com/2009/08/arkham-asylum-sets-world-record-for-most-critically-acclaimed-superhero-game-ever"
+            },
+            {
+              "label": "Wikipedia",
+              "url": "https://en.wikipedia.org/wiki/Batman:_Arkham_Asylum"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Tomb Raider: Underworld",
+        "year": 2008
+      },
+      {
+        "title": "Monster Lab",
+        "year": 2008
+      },
+      {
+        "title": "Conflict: Denied Ops",
+        "year": 2008
+      },
+      {
+        "title": "Nervous Brickdown",
+        "year": 2007
+      },
+      {
+        "title": "Who Wants to be a Millionaire: Party Edition",
+        "year": 2006
+      }
+    ]
+  },
+  {
+    "studio": "Eurocom",
+    "role": "Lead Designer and Senior Producer",
+    "from": 1997,
+    "to": 2006,
+    "summary": "Design and production together, from pitch to release: design documents, levels and encounters, game systems and enemy AI, balancing, project management and platform submission. Grew from a 20-person team to leading 40.",
+    "games": [
+      {
+        "title": "Predator: Concrete Jungle",
+        "year": 2005
+      },
+      {
+        "title": "James Bond 007: Nightfire",
+        "year": 2002,
+        "featured": true,
+        "detail": {
+          "developer": "Eurocom (console versions)",
+          "publisher": "Electronic Arts",
+          "blurb": "An original Bond adventure, with Pierce Brosnan’s likeness, built to feel like the films.",
+          "part": "At Eurocom, leading a design team built largely from former QA testers, working within the 007 franchise bible and directly with the IP holders.",
+          "stats": [
+            {
+              "value": "5M",
+              "label": "copies sold across platforms within a year"
+            },
+            {
+              "value": "80",
+              "label": "Metacritic (GameCube)"
+            },
+            {
+              "value": "Platinum",
+              "label": "ELSPA UK sales award (PS2)"
+            }
+          ],
+          "sources": [
+            {
+              "label": "Wikipedia, citing IGN and ELSPA",
+              "url": "https://en.wikipedia.org/wiki/James_Bond_007:_Nightfire"
+            }
+          ]
+        }
+      },
+      {
+        "title": "The World Is Not Enough",
+        "year": 2000
+      },
+      {
+        "title": "Duke Nukem: Zero Hour",
+        "year": 1999
+      },
+      {
+        "title": "Duke Nukem 64",
+        "year": 1997,
+        "featured": true,
+        "detail": {
+          "developer": "Eurocom",
+          "publisher": "GT Interactive",
+          "blurb": "Duke Nukem 3D rebuilt for the Nintendo 64, with four-player split-screen and co-op.",
+          "part": "One of my first games at Eurocom, the start of a run on Duke Nukem that continued with Zero Hour.",
+          "stats": [
+            {
+              "value": "73",
+              "label": "Metacritic"
+            },
+            {
+              "value": "86%",
+              "label": "N64 Magazine review"
+            }
+          ],
+          "sources": [
+            {
+              "label": "Metacritic",
+              "url": "https://www.metacritic.com/game/duke-nukem-64/"
+            },
+            {
+              "label": "N-Europe",
+              "url": "https://n-europe.com/features/all-n64-games-50-duke-nukem-64"
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

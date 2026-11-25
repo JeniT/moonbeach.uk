@@ -1,0 +1,90 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import Arrow from '../../components/Arrow.astro';
+import WhatIBring from '../../components/WhatIBring.astro';
+import FeaturedAdventure from '../../components/FeaturedAdventure.astro';
+
+const bring: [string, string][] = [
+  ['Immersive worlds', 'I build believable and plausible worlds, where NPCs have their own agendas and everything happens for a reason. PCs are tied to the world and the narrative from the very start, and the narrative evolves around them as the adventure continues.'],
+  ['Player-driven progression', 'Once the adventure has begun, the players choose where to go and what to do, how to tackle any situation, and what a ‘win’ looks like for their characters.  With freedom comes risk however: the NPCs will react to the PCs actions, however, and every choice can have consequences.'],
+  ['Bespoke content', 'From homebrew scenarios, enemies, and magic items to purpose-built maps (drawn using Wonderdraft and Dungeondraft), in-game letters and diaries, illustrated session write-ups, and of course ‘wanted’ posters for your (in)famous PCs… I provide it all.'],
+  ['Deep characterisation', 'I love it when the players spend a session talking amongst themselves in character, or interrogating / negotiating with / threatening / flirting with NPCs. It means the players believe in their characters and the world, and for me is one of the most enjoyable parts of roleplaying games.'],
+  ['Fierce combat', 'When the talking is over (or sometimes before it even has time to start), it is time to roll for initiative. Using tactical maps on a virtual tabletop allows everyone to keep track of the action and plan their moves, which is vital when combat can be for high stakes. Like the PCs, the enemies will fight dirty, take advantage of the environment, and have their own goals. There is no ‘plot armour’ for NPCs; and while player death is possible, I find that there are always other ways to generate tension for the PCs and so make any victory that much sweeter.'],
+  ['Inclusion', 'I welcome players of all ages, levels of experience, and orientations. I have run games for first-time gamers and veterans alike, and am always careful not to overwhelm players with more information or choices than they are ready to handle. I am also mindful of player sensitivity about triggering content, and use Line and Veils to ensure every player is comfortable with the story and events as they play out.'],
+];
+
+const systems = [
+  { name: 'Dungeons & Dragons', text: 'The classic, now more streamlined and inclusive than ever, where players drive the plot and deal with the consequences of their choices.' },
+  {name: 'Mage: The Sorcerers Crusade', text: 'Tales of discovery and exploration in a mystical Renaissance Europe, where players forge a new world or fight to defend the old.' },
+  { name: 'World of Darkness', text: 'Urban fantasy and personal horror, where the players ARE the monsters.' },
+  { name: 'Dolmenwood', text: 'Dark fairytale stories told using an Old School rule system, where players brave the depths of an intensely atmospheric forest in dangerous and quixotic quests.' },
+  { name: 'Powered by the Apocalypse', text: 'Fiction-first games with a shared rule system, where the players and GM shapes the narrative and the action together.' },
+];
+---
+<Base title="At the table" description="Bill Beacham runs tabletop role-playing campaigns online: D&D, World of Darkness, Dolmenwood and Powered by the Apocalypse fiction-first games.">
+  <PageHead
+    title="At the<br><span>table</span>"
+    lede="Long campaigns, run online. Thirty years of designing immersive player experiences, bringing groups of friends together to tell a shared emergent story and deliver unforgetable experiences."
+    focus="70% 30%"
+  />
+
+  <WhatIBring items={bring} />
+
+  <section class="systems" aria-labelledby="sys-h">
+    <h2 id="sys-h">What I run</h2>
+    <ul>
+      {systems.map((s) => (
+        <li><h3>{s.name}</h3><p>{s.text}</p></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="how" aria-labelledby="how-h">
+    <h2 id="how-h">How it works</h2>
+    <dl>
+      <div><dt>Where</dt><dd>Online, on a virtual tabletop, so players can join from wherever they are.</dd></div>
+      <div><dt>How long</dt><dd>Personalized adventures. Long-running campaigns lasting months, where roleplaying is key, with characters and a world that grow and change with the group. Or shorter series for intense cinematic adventure.</dd></div>
+      <div><dt>Joining</dt><dd>Get in touch to hear what’s running, and whether there’s a seat available or a new adventure on the horizon.</dd></div>
+    </dl>
+  </section>
+
+  <section class="ask">
+    <h2>Looking for a game?</h2>
+    <p>Tell me which game interests you, how many players, and when you can play. I’ll reply with what’s running and what could be.</p>
+    <a class="action" href="mailto:bill.beacham@gmail.com?subject=Tabletop%20game">Email me <Arrow /></a>
+  </section>
+
+  <FeaturedAdventure bleed={false} heading="Or play one of mine" allLink allLabel="All my adventures, for the table" />
+</Base>
+
+<style>
+  .systems { padding: clamp(48px, 7vw, 96px) var(--gutter); }
+  .systems h2, .how h2 { font-size: clamp(2.75rem, 5vw, 4rem); padding-bottom: 14px; border-bottom: var(--rule); margin-bottom: 8px; }
+  .systems ul { list-style: none; padding: 0; }
+  .systems li {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    align-items: baseline;
+    gap: 8px 48px;
+    padding: 22px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  }
+  h3 { font-size: clamp(2.25rem, 5vw, 4rem); color: var(--rust); }
+  .systems p { font-size: 1.1875rem; max-width: 40ch; }
+
+  .how { padding: 0 var(--gutter) clamp(48px, 7vw, 96px); }
+  dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 48px; margin-top: 24px; }
+  dt { font: 700 1.625rem/1 var(--display); text-transform: uppercase; color: var(--rust); margin-bottom: 8px; }
+  dd { margin: 0; max-width: 36ch; }
+
+  .ask { background: var(--rust); color: var(--stock); padding: clamp(48px, 7vw, 96px) var(--gutter); }
+  .ask h2 { font-size: clamp(3rem, 6.5vw, 5.5rem); }
+  .ask p { font-size: 1.25rem; max-width: 52ch; margin: 18px 0 24px; }
+  .ask .action:hover { color: var(--ochre); }
+
+  @media (max-width: 760px) {
+    .systems li { grid-template-columns: 1fr; }
+    dl { grid-template-columns: 1fr; }
+  }
+</style>

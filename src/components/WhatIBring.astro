@@ -1,0 +1,49 @@
+---
+// "What I bring": a rust band of strengths, set straight under the page header.
+import Arrow from './Arrow.astro';
+
+interface Props {
+  items: [string, string][];
+  heading?: string;
+  note?: string;
+  link?: { href: string; label: string };
+}
+const { items, heading = 'What I bring', note, link } = Astro.props;
+---
+<section class="bring" aria-labelledby="bring-h">
+  <h2 id="bring-h">{heading}</h2>
+  <dl>
+    {items.map(([term, text]) => (
+      <div><dt>{term}</dt><dd>{text}</dd></div>
+    ))}
+  </dl>
+  {(note || link) && (
+    <div class="foot">
+      {note && <p>{note}</p>}
+      {link && <a class="action" href={link.href}>{link.label} <Arrow /></a>}
+    </div>
+  )}
+</section>
+
+<style>
+  .bring {
+    background: var(--rust);
+    color: var(--stock);
+    padding: clamp(48px, 7vw, 96px) var(--gutter);
+  }
+  h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 40px; }
+  dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 48px; }
+  dl div { border-top: 2px solid var(--stock); padding-top: 14px; }
+  dt { font: 700 1.625rem/1.05 var(--display); text-transform: uppercase; margin-bottom: 8px; }
+  dd { margin: 0; color: var(--stock-soft); }
+  .foot {
+    display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 48px;
+    margin-top: 48px;
+  }
+  .foot p { font-size: 1.25rem; }
+  .action:hover { color: var(--ochre); }
+  .bring :focus-visible { outline-color: var(--stock); }
+
+  @media (max-width: 900px) { dl { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { dl { grid-template-columns: 1fr; } }
+</style>

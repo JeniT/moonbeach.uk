@@ -1,0 +1,227 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import Arrow from '../../components/Arrow.astro';
+import PostsSection from '../../components/PostsSection.astro';
+import WhatIBring from '../../components/WhatIBring.astro';
+import career from '../../data/career.json';
+
+const total = career.reduce((n, era) => n + era.games.length, 0);
+const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+type Detail = {
+  developer: string; publisher: string; blurb: string; part: string;
+  stats: { value: string; label: string }[];
+  sources: { label: string; url: string }[];
+  image?: { src: string; alt: string; credit?: string };
+};
+const disciplines: [string, string][] = [
+  ['Creative direction', 'Consistency and coherence across a project’s whole content: systems, narrative, UI, art direction and audio.'],
+  ['Game design', 'Systems including locomotion, combat, camera and AI; game loops, pacing, progression, level design, balancing, onboarding and retention.'],
+  ['Narrative design', 'Characters, arcs, emotional beats, scriptwriting and editing, mission design, worldbuilding and environmental storytelling.'],
+  ['Editorial feedback', 'Reviewing work at every stage, from documents and prototypes to post-release updates, and leaving teams energised to solve the problem.'],
+  ['Running projects', 'Scoping, milestone definition and review, and validating direction through playtests, focus tests and analytics.'],
+  ['Building teams', 'Hiring, mentoring and definig career paths for game and narrative designers, many of whom went on to lead their own teams.'],
+];
+---
+<Base title="Video games" description={`Bill Beacham’s games portfolio: thirty years and ${total} shipped titles as designer, producer and design director.`}>
+  <PageHead
+    title="Video Games<br><span>1997–2026</span>"
+    lede={`${total} shipped titles as lead designer, senior producer, external designer and design director. Open to permanent roles and consulting.`}
+    focus="40% 22%"
+  />
+
+  <WhatIBring
+    items={disciplines}
+    note="Invited to serve as a game design juror for BAFTA."
+    link={{ href: '/about/', label: 'More about me' }}
+  />
+
+  <section class="eras" aria-label="Career">
+    {career.map((era) => (
+      <article class="era">
+        <header>
+          <h2>{era.studio}</h2>
+          <p class="role">{era.role} <span class="span">{era.from}–{era.to}</span></p>
+          <p class="summary">{era.summary}</p>
+        </header>
+        <ol class="titles">
+          {era.games.map((g) => {
+            const d = (g as { detail?: Detail }).detail;
+            if (!d) return (
+              <li>
+                <span class="year">{g.year}</span>
+                <span class="title">{g.title}</span>
+              </li>
+            );
+            const id = `game-${slug(g.title)}`;
+            return (
+              <li class="featured">
+                <h3>
+                  <button class="toggle" type="button" aria-expanded="true" aria-controls={id}>
+                    <span class="year">{g.year}</span>
+                    <span class="title">{g.title}</span>
+                    <span class="more" aria-hidden="true">
+                      <svg viewBox="0 0 20 20"><path d="M3 10h14M10 3v14" fill="none" stroke="currentColor" stroke-width="2.4" /></svg>
+                    </span>
+                  </button>
+                </h3>
+                {g.note && <p class="note">{g.note}</p>}
+                <div class="panel open" id={id}>
+                  <div class="panel-inner">
+                    <div class="sheet">
+                      {d.image && (
+                        <figure>
+                          <img src={d.image.src} alt={d.image.alt} loading="lazy" />
+                          {d.image.credit && <figcaption>{d.image.credit}</figcaption>}
+                        </figure>
+                      )}
+                      <dl class="stats">
+                        {d.stats.map((st) => (
+                          <div><dt>{st.label}</dt><dd>{st.value}</dd></div>
+                        ))}
+                      </dl>
+                      <p class="blurb">{d.blurb}</p>
+                      <p class="part"><b>My part.</b> {d.part}</p>
+                      <p class="meta">
+                        Developed by {d.developer}. Published by {d.publisher}.
+                        <span class="sources">Sources: {d.sources.map((src, i) => (
+                          <>{i > 0 && ', '}<a href={src.url} rel="noopener">{src.label}</a></>
+                        ))}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      </article>
+    ))}
+  </section>
+
+  <script>
+    // Featured games start open (so the page works without JavaScript);
+    // with JavaScript they collapse and slide open on demand.
+    for (const btn of document.querySelectorAll<HTMLButtonElement>('.toggle')) {
+      const panel = document.getElementById(btn.getAttribute('aria-controls')!)!;
+      const set = (open: boolean) => {
+        btn.setAttribute('aria-expanded', String(open));
+        panel.classList.toggle('open', open);
+        panel.inert = !open;
+      };
+      set(false);
+      btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+    }
+  </script>
+
+
+  <PostsSection
+    tag="video-games"
+    heading="Writing about video games"
+    intro="What thirty years of designing and directing games has taught me."
+    journalIntro="Things worth a look: new games, industry news, and old friends doing well."
+  />
+</Base>
+
+<style>
+  .eras { padding: clamp(40px, 6vw, 80px) var(--gutter); }
+  .era {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    gap: 24px clamp(32px, 6vw, 96px);
+    padding: clamp(32px, 4vw, 48px) 0;
+    border-top: var(--rule);
+  }
+  .span { font: 700 1.375rem/1 var(--display); color: var(--rust); letter-spacing: 0.04em; margin-left: 0.4em; }
+  .era h2 { font-size: clamp(2.5rem, 4.6vw, 3.75rem); margin-bottom: 10px; }
+  .role { font-weight: 600; font-size: 1.125rem; }
+  .summary { margin-top: 14px; color: var(--ink-soft); max-width: 46ch; }
+
+  .titles { list-style: none; padding: 0; }
+  .titles li {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 2px 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  }
+  .titles li:first-child { padding-top: 0; }
+  .year { font: 700 1.25rem/1.2 var(--display); color: var(--rust); }
+  .title { font: 700 clamp(1.25rem, 1.8vw, 1.5rem)/1.15 var(--display); text-transform: uppercase; }
+  .note { color: var(--ink-soft); max-width: 50ch; padding: 0 0 12px 5.75rem; margin-top: -4px; }
+
+  /* Featured games: the row is a button that slides a printed panel open. */
+  .titles li.featured { display: block; padding: 0; }
+  .featured h3 { font: inherit; text-transform: none; }
+  .toggle {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2px 20px;
+    padding: 12px 0;
+  }
+  .toggle .title { font-size: clamp(1.625rem, 2.6vw, 2.125rem); font-weight: 900; transition: color 0.3s var(--ease); }
+  .more {
+    width: 34px; height: 34px;
+    display: grid; place-items: center;
+    border: 2px solid var(--rust); color: var(--rust);
+    transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
+  }
+  .more svg { width: 16px; height: 16px; transition: transform 0.5s var(--ease); }
+  .toggle:hover .title { color: var(--rust); }
+  .toggle:hover .more, .toggle[aria-expanded='true'] .more { background: var(--rust); color: var(--stock); }
+  .toggle[aria-expanded='true'] .more svg { transform: rotate(135deg); }
+  .toggle:focus-visible { outline: 3px solid var(--rust); outline-offset: 2px; }
+
+  .panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.6s var(--ease);
+  }
+  .panel.open { grid-template-rows: 1fr; }
+  .panel-inner { overflow: hidden; min-height: 0; }
+  .sheet {
+    background: var(--ink);
+    color: var(--stock);
+    margin: 4px 0 16px;
+    padding: clamp(20px, 2.6vw, 32px);
+    display: grid;
+    gap: 18px;
+    opacity: 0;
+    transform: translateY(-12px);
+    transition: opacity 0.4s var(--ease), transform 0.6s var(--ease);
+  }
+  .panel.open .sheet { opacity: 1; transform: none; }
+  figure img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+  figcaption { font-size: 0.8125rem; color: var(--stock-soft); margin-top: 6px; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: 16px 24px;
+  }
+  .stats div { border-top: 2px solid var(--ochre); padding-top: 10px; display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 6px; }
+  .stats dd { margin: 0; font: 900 clamp(2.5rem, 3.6vw, 3.25rem)/0.9 var(--display); text-transform: uppercase; color: var(--ochre); }
+  .stats dt { font: 400 0.9375rem/1.35 var(--body); text-transform: none; color: var(--stock-soft); margin: 0; }
+  .blurb { font-size: 1.1875rem; line-height: 1.45; max-width: 52ch; }
+  .part { max-width: 60ch; color: var(--stock-soft); }
+  .part b { color: var(--stock); font-weight: 600; }
+  .meta { font-size: 0.875rem; color: var(--stock-soft); border-top: 1px solid color-mix(in srgb, var(--stock) 30%, transparent); padding-top: 12px; }
+  .sources { display: block; margin-top: 2px; }
+  .meta a { color: var(--stock); }
+  .meta a:hover { color: var(--ochre); }
+  .meta a:focus-visible { outline-color: var(--ochre); }
+
+
+  @media (max-width: 900px) {
+    .era { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .titles li { grid-template-columns: 3.5rem minmax(0, 1fr); }
+    .toggle { grid-template-columns: 3.5rem minmax(0, 1fr) auto; }
+    .note { padding-left: 4.75rem; }
+  }
+</style>

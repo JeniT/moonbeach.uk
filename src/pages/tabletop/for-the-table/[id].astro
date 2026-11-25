@@ -1,0 +1,174 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Arrow from '../../../components/Arrow.astro';
+import BuyButton from '../../../components/BuyButton.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('adventures', ({ data }) => !data.draft && !data.comingSoon);
+  return items.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const facts = [
+  ['System', d.system],
+  ['Characters', d.level],
+  ['Setting', d.setting],
+  ['Players', d.players],
+  ['Status', d.status],
+].filter(([, v]) => v) as [string, string][];
+---
+<Base title={d.title} description={d.summary}>
+  {d.cover ? (
+    <section class="head">
+      <figure class="cover">
+        <img src={d.cover.src} alt={d.cover.alt} fetchpriority="high" />
+      </figure>
+      <div class="head-copy">
+        <h1>{d.title}</h1>
+        {d.hook && (
+          <ul class="hook">
+            {d.hook.map((line) => <li>{line}</li>)}
+          </ul>
+        )}
+        <p class="meta">{[d.system, d.level, d.status].filter(Boolean).join(' · ')}</p>
+        <div class="cta">
+          <BuyButton buyUrl={d.buyUrl} store={d.store} />
+          {d.guide && (
+            <a class="action download" href={d.guide.href} download>
+              Free player’s guide <span class="size">PDF · {d.guide.size}</span> <Arrow />
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+  ) : (
+    <PageHead title={d.title} lede={`${d.system} · ${d.status}`} focus="30% 70%" />
+  )}
+
+  <section class="body">
+    <article class="prose">
+      <p class="lead">{d.summary}</p>
+      <Content />
+    </article>
+    <aside aria-label="At a glance">
+      <dl>
+        {facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+        {d.store && (
+          <div>
+            <dt>Where to buy</dt>
+            <dd>{d.buyUrl
+              ? <a class="store" href={d.buyUrl} rel="noopener">{d.store} <Arrow /></a>
+              : <>Coming soon to {d.store}</>}</dd>
+          </div>
+        )}
+      </dl>
+    </aside>
+  </section>
+
+  {d.map && (
+    <figure class="map">
+      <img src={d.map.src} alt={d.map.alt} loading="lazy" />
+      <figcaption>{d.map.caption}</figcaption>
+    </figure>
+  )}
+
+  {d.guide && (
+    <section class="guide" aria-labelledby="guide-h">
+      <div>
+        <h2 id="guide-h">The player’s guide</h2>
+        <p>Everything players need before the first session, in one {d.guide.pages}-page PDF.</p>
+        <ul>
+          {d.guide.contents.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+      <div class="file">
+        <p class="file-name">{d.guide.title}</p>
+        <p class="file-meta">PDF · {d.guide.pages} pages · {d.guide.size}</p>
+        <a class="action get" href={d.guide.href} download>Download <Arrow /></a>
+        <a class="view" href={d.guide.href}>Or open it in your browser</a>
+      </div>
+    </section>
+  )}
+
+  <nav class="back" aria-label="For the table">
+    <a class="action" href="/tabletop/for-the-table/">Everything I’m writing <Arrow /></a>
+  </nav>
+</Base>
+
+<style>
+  /* Cover and title on one dark printed sheet. */
+  .head {
+    background: var(--ink);
+    color: var(--stock);
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+  .cover img { width: 100%; height: 100%; object-fit: cover; max-height: 86svh; }
+  .head-copy { padding: clamp(28px, 4.5vw, 64px); display: grid; align-content: center; gap: 22px; }
+  .meta { font: 700 1.125rem/1.2 var(--display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ochre); }
+  h1 { font-size: clamp(3.75rem, 8vw, 6rem); }
+  .hook { list-style: none; padding: 0; display: grid; gap: 10px; max-width: 40ch; }
+  .hook li { font: 700 1.25rem/1.25 var(--display); letter-spacing: 0.04em; text-transform: uppercase; color: var(--stock-soft); }
+  .hook li:last-child { color: var(--ochre); }
+  .cta { display: grid; gap: 16px; justify-items: start; margin-top: 4px; }
+  .download { color: var(--ochre); padding-block: 4px; }
+  .download:hover { color: var(--stock); }
+  .download :global(svg) { transform: rotate(90deg); }
+  .size { font-family: var(--body); font-weight: 600; font-size: 0.875rem; letter-spacing: 0; text-transform: none; opacity: 0.85; }
+
+  .body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 20rem);
+    gap: 48px clamp(40px, 7vw, 120px);
+    padding: clamp(48px, 7vw, 96px) var(--gutter);
+    align-items: start;
+  }
+  .lead { font-size: 1.5rem; line-height: 1.4; }
+  aside { border-top: var(--rule); position: sticky; top: 24px; }
+  aside div { padding: 14px 0; border-bottom: 1px solid color-mix(in srgb, var(--ink) 30%, transparent); }
+  dt { font: 700 1rem/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust); margin-bottom: 6px; }
+  dd { margin: 0; font: 700 1.5rem/1.1 var(--display); text-transform: uppercase; }
+  /* In the facts list the store is just another row; the button lives in the header. */
+  .store { display: inline-flex; align-items: center; gap: 0.4em; color: var(--rust); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .store :global(svg) { width: 0.8em; height: 0.8em; }
+
+  .map { padding: 0 var(--gutter) clamp(48px, 7vw, 96px); }
+  .map img { width: 100%; border: 2px solid var(--ink); }
+  .map figcaption { margin-top: 10px; font-size: 0.9375rem; color: var(--ink-soft); }
+
+  /* The download, printed in rust. */
+  .guide {
+    background: var(--rust);
+    color: var(--stock);
+    padding: clamp(48px, 7vw, 96px) var(--gutter);
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(260px, 1fr);
+    gap: 40px clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+  .guide h2 { font-size: clamp(3rem, 6vw, 5rem); }
+  .guide > div > p { font-size: 1.25rem; margin: 16px 0 20px; max-width: 46ch; }
+  .guide ul { padding-left: 1.2em; display: grid; gap: 6px; max-width: 56ch; }
+  .guide li::marker { color: var(--ochre); }
+  .file { background: var(--ink); padding: 28px; display: grid; gap: 10px; }
+  .file-name { font: 900 2rem/1 var(--display); text-transform: uppercase; }
+  .file-meta { color: var(--stock-soft); }
+  .get { background: var(--ochre); color: var(--ink); padding: 14px 20px; justify-self: start; margin-top: 8px; }
+  .get:hover { background: var(--stock); }
+  .view { color: var(--stock-soft); font-size: 0.9375rem; }
+  .view:hover { color: var(--stock); }
+  .file :focus-visible, .head :focus-visible { outline-color: var(--ochre); }
+
+  .back { padding: clamp(32px, 5vw, 56px) var(--gutter); }
+  .back .action { color: var(--rust); }
+
+  @media (max-width: 900px) {
+    .head, .body, .guide { grid-template-columns: 1fr; }
+    .cover img { max-height: 60svh; object-position: 50% 30%; }
+    aside { position: static; }
+  }
+</style>

@@ -1,0 +1,34 @@
+---
+// The one filled button on the site, kept for buying an adventure.
+// With a buyUrl it links to the store; with only a store name it says the adventure is coming there.
+import Arrow from './Arrow.astro';
+
+interface Props { buyUrl?: string; store?: string; }
+const { buyUrl, store } = Astro.props;
+---
+{buyUrl ? (
+  <a class="buy" href={buyUrl} rel="noopener">
+    Buy it {store ? `on ${store}` : 'now'} <Arrow />
+  </a>
+) : store ? (
+  <p class="buy soon">Coming soon to {store}</p>
+) : null}
+
+<style>
+  .buy {
+    display: inline-flex; align-items: center; gap: 0.5em;
+    font: 900 1.375rem/1 var(--display);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none;
+    background: var(--ochre); color: var(--ink);
+    padding: 18px 24px;
+    transition: background-color 0.3s var(--ease);
+  }
+  .buy :global(svg) { width: 1.1em; height: 1.1em; transition: transform 0.4s var(--ease); }
+  a.buy:hover { background: var(--stock); }
+  a.buy:hover :global(svg) { transform: translateX(4px); }
+  a.buy:focus-visible { outline: 3px solid var(--stock); outline-offset: 3px; }
+  /* Until the store page exists: the same block, printed as an outline, not a link. */
+  .soon { background: none; color: var(--ochre); border: 2px solid var(--ochre); padding: 16px 22px; }
+  @media (max-width: 480px) { .buy { font-size: 1.125rem; letter-spacing: 0.06em; padding: 16px 18px; } }
+</style>

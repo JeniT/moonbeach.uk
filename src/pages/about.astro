@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { tagline } from '../lib/site';
+---
+<Base title="About" description="About Bill Beacham: veteran design director, BAFTA game design juror, and tabletop games master based in London.">
+  <PageHead
+    title="About<br><span>me</span>"
+    lede={tagline}
+    focus="85% 55%"
+  />
+
+  <section class="about">
+    <div class="prose">
+      <p class="lead">
+        I’m Bill Beacham. I’ve spent thirty years designing, producing and directing games, from
+        <i>Duke Nukem 64</i> at Eurocom to fourteen years as a Design Director at Square Enix External Studios.
+      </p>
+      <p>
+        My work has been built on some of the biggest names in film, comics and games, including
+        <i>James Bond</i>, <i>Batman</i>, <i>Tomb Raider</i>, <i>Deus Ex</i> and <i>Just Cause</i>.
+        I pitched the original <i>Life is Strange</i> and helped grow it into a seven-title franchise over twelve years.
+      </p>
+      <p>
+        My speciality is shaping and refining other people’s creative visions: giving clear, actionable
+        direction to development teams, aligning design, narrative, art, audio and technology, and keeping
+        a project the right size for its time and budget. Colleagues know me for collaborative problem-solving,
+        clear communication, and standing up for the player’s immersion, motivation and emotional experience.
+      </p>
+      <h2>Beyond the studio</h2>
+      <p>
+        I run long tabletop campaigns online, mostly D&amp;D, World of Darkness, and narrative
+        indie games, and I’m writing adventures of my own. I’ve served as a game design juror for BAFTA,
+        and studied Philosophy at the University of Nottingham.
+      </p>
+      <h2>Working together</h2>
+      <p>
+        I’m open to design direction roles and to consulting: pitch and concept reviews, milestone
+        and content feedback, establishing or evolving franchise pillars, and building design teams.
+        <a href="mailto:bill.beacham@gmail.com">Email me</a> or find me on
+        <a href="https://www.linkedin.com/in/bill-beacham">LinkedIn</a>.
+      </p>
+    </div>
+    <aside aria-label="At a glance">
+      <dl>
+        <div><dt>Based</dt><dd>London</dd></div>
+        <div><dt>Open to</dt><dd>Design direction roles and consulting</dd></div>
+        <div><dt>In games since</dt><dd>1997</dd></div>
+        <div><dt>Studios</dt><dd>Eurocom, Eidos, Square Enix</dd></div>
+        <div><dt>Juror</dt><dd>BAFTA, game design</dd></div>
+        <div><dt>Studied</dt><dd>Philosophy, University of Nottingham</dd></div>
+      </dl>
+    </aside>
+  </section>
+</Base>
+
+<style>
+  .about {
+    padding: clamp(48px, 7vw, 96px) var(--gutter);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 22rem);
+    gap: 48px clamp(40px, 7vw, 120px);
+    align-items: start;
+  }
+  aside { position: sticky; top: 24px; border-top: var(--rule); }
+  aside div { padding: 14px 0; border-bottom: 1px solid color-mix(in srgb, var(--ink) 30%, transparent); }
+  dt { font: 700 1rem/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust); margin-bottom: 6px; }
+  dd { margin: 0; font: 700 1.5rem/1.1 var(--display); text-transform: uppercase; }
+  @media (max-width: 860px) { .about { grid-template-columns: 1fr; } aside { position: static; } }
+  .lead { font-size: 1.5rem; line-height: 1.4; }
+</style>

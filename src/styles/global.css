@@ -1,0 +1,105 @@
+/* Four inks, as printed on the Piranesi plate. */
+:root {
+  --ink: #24180f;        /* dark brown: text, caption bars */
+  --rust: #7c3522;       /* links and secondary ink on stock */
+  --ochre: #cf8f3a;      /* accent on dark ink only */
+  --stock: #f0e2c4;      /* the paper */
+  --stock-deep: #e6d3ab; /* stock printed with a light ochre tint */
+  --ink-soft: #5a3d2b;   /* secondary text on stock */
+  --stock-soft: #d9c7a3; /* secondary text on ink */
+
+  --display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --body: 'Figtree Variable', 'Figtree', system-ui, sans-serif;
+
+  --border: clamp(8px, 1.4vw, 20px);
+  --gutter: clamp(16px, 3vw, 40px);
+  --rule: 2px solid currentColor;
+  --measure: 34em;      /* about 70 characters of Figtree */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: light;
+  accent-color: var(--rust);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  background: var(--stock);
+  scrollbar-color: var(--rust) var(--stock-deep);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--stock);
+  color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--body);
+  font-variant-numeric: tabular-nums;
+  border: var(--border) solid var(--stock);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--ochre); color: var(--ink); }
+
+img { display: block; max-width: 100%; }
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--ochre);
+  outline-offset: 3px;
+}
+
+.on-stock :focus-visible, main :focus-visible { outline-color: var(--rust); }
+
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+}
+
+p, li { text-wrap: pretty; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+.skip {
+  position: absolute; left: var(--border); top: -100px; z-index: 10;
+  background: var(--ochre); color: var(--ink); padding: 10px 16px;
+  font: 700 1.125rem var(--display); text-transform: uppercase; letter-spacing: 0.08em;
+}
+.skip:focus { top: var(--border); }
+
+/* A label set in the display face, used for actions. */
+.action {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font: 700 1.125rem/1 var(--display);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none;
+}
+.action svg { width: 1.1em; height: 1.1em; transition: transform 0.4s var(--ease); }
+a.action:hover svg, a:hover .action svg { transform: translateX(4px); }
+
+/* Prose for notes and long-form pages. */
+.prose { max-width: var(--measure); font-size: 1.125rem; }
+.prose > * + * { margin-top: 1em; }
+.prose h2 { font-size: 2.25rem; margin-top: 1.6em; }
+.prose h3 { font-size: 1.6rem; margin-top: 1.4em; }
+.prose h2 + *, .prose h3 + * { margin-top: 0.6em; }
+.prose a { color: var(--rust); }
+.prose blockquote { font-size: 1.375rem; line-height: 1.45; color: var(--rust); padding-inline: 1em; }
+.prose ul, .prose ol { padding-left: 1.25em; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

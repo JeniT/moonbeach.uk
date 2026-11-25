@@ -1,0 +1,116 @@
+---
+// The featured adventure: a dark printed sheet with the cover art, hooks, the store button and the guide.
+//   bleed (default)  a full-width ink band, edge to edge like the footer, when it is a section
+//                    in its own right (home, Tabletop)
+//   bleed={false}    the same sheet set in to the page margins, when it sits under a heading or
+//                    straight after a dark caption bar (At the table, For the table)
+// Facts sit under the summary, never above the title. Buying is the main action.
+import Arrow from './Arrow.astro';
+import BuyButton from './BuyButton.astro';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  bleed?: boolean;
+  allLink?: boolean;
+  /** Words for the link to the For the table page. */
+  allLabel?: string;
+  /** A visible heading above the adventure; without one the adventure's title is the heading. */
+  heading?: string;
+}
+const { bleed = true, allLink = false, allLabel = 'All my adventures', heading } = Astro.props;
+
+const featured = (await getCollection('adventures', ({ data }) => !data.draft && !data.comingSoon))
+  .sort((a, b) => a.data.order - b.data.order)[0];
+const d = featured?.data;
+const href = featured ? `/tabletop/for-the-table/${featured.id}/` : '';
+const facts = d ? [d.system, d.level, d.status].filter(Boolean).join(' · ') : '';
+// With a heading above it the title steps down, so it never outranks that heading.
+const Title = heading ? 'h3' : 'h2';
+---
+<section class:list={['adventure', { bleed, inset: !bleed }]} aria-labelledby="adv-h">
+  {heading && <h2 id="adv-h" class="heading">{heading}</h2>}
+  {featured && d ? (
+    <article class:list={['feature', { small: !!heading }]}>
+      {d.cover && (
+        <a class="cover" href={href} tabindex="-1" aria-hidden="true">
+          <img src={d.cover.src} alt="" loading="lazy" />
+        </a>
+      )}
+      <div class="copy">
+        <Title class="title" id={heading ? undefined : 'adv-h'}><a href={href}>{d.title}</a></Title>
+        <p class="summary">{d.summary}</p>
+        <p class="meta">{facts}</p>
+        {d.hook && (
+          <ul class="hook">
+            {d.hook.slice(0, 4).map((line) => <li>{line}</li>)}
+          </ul>
+        )}
+        <div class="cta">
+          <BuyButton buyUrl={d.buyUrl} store={d.store} />
+          <div class="links">
+            <a class="action" href={href}>About the adventure <Arrow /></a>
+            {d.guide && (
+              <a class="action download" href={d.guide.href} download>
+                Free player’s guide <span class="size">PDF · {d.guide.size}</span> <Arrow />
+              </a>
+            )}
+          </div>
+        </div>
+        {allLink && <a class="action all" href="/tabletop/for-the-table/">{allLabel} <Arrow /></a>}
+      </div>
+    </article>
+  ) : (
+    <p class="empty">My first adventures are being written and playtested.</p>
+  )}
+</section>
+
+<style>
+  .inset { padding: clamp(48px, 7vw, 96px) var(--gutter); }
+  .heading { font-size: clamp(2.75rem, 5vw, 4rem); padding-bottom: 14px; border-bottom: var(--rule); margin-bottom: 24px; }
+  .bleed .heading { margin: 0 var(--gutter) 24px; padding-top: clamp(48px, 7vw, 96px); }
+
+  /* A printed sheet: the cover runs to the edges of the band, the copy sits beside it. */
+  .feature {
+    background: var(--ink); color: var(--stock);
+    display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+  .cover { display: block; background: var(--ink); }
+  .cover img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; aspect-ratio: 3 / 4; }
+  /* A column whose spare height is shared above the title and above the closing link:
+     the content stays centred and "All my adventures" sits at the foot of the band. */
+  .copy { padding: clamp(32px, 4vw, 80px) clamp(24px, 4vw, 64px); display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+  .copy > .title { margin-top: auto; }
+
+  .title { font-size: clamp(3.25rem, 6.6vw, 6rem); text-wrap: balance; }
+  .small .title { font-size: clamp(2.5rem, 4.4vw, 3.75rem); }
+  .title a { text-decoration: none; }
+  .title a:hover { color: var(--ochre); }
+  .summary { font-size: 1.25rem; line-height: 1.45; max-width: 46ch; }
+  .meta { font: 700 1rem/1.3 var(--display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ochre); }
+  .hook { list-style: none; padding: 14px 0 0; border-top: 1px solid color-mix(in srgb, var(--stock) 30%, transparent); display: grid; gap: 6px; width: 100%; }
+  .hook li { font-style: italic; color: var(--stock-soft); font-size: 1.0625rem; }
+
+  /* Buying leads; everything else is a quieter link beneath it. */
+  .cta { display: grid; gap: 18px; justify-items: start; margin-top: 10px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px 28px; }
+  .action { color: var(--ochre); padding-block: 4px; }
+  .action:hover { color: var(--stock); }
+  .download :global(svg) { transform: rotate(90deg); }
+  .download:hover :global(svg) { transform: rotate(90deg) translateX(3px); }
+  .size { font-family: var(--body); font-weight: 600; font-size: 0.875rem; letter-spacing: 0; text-transform: none; opacity: 0.85; }
+  .feature :focus-visible { outline-color: var(--ochre); }
+  /* The way on to every adventure closes the sheet, under its own hairline. */
+  .all { align-self: stretch; margin-top: auto; padding-top: 18px; border-top: 1px solid color-mix(in srgb, var(--stock) 30%, transparent); }
+
+  .empty { font-size: 1.125rem; color: var(--ink-soft); padding: clamp(48px, 7vw, 96px) var(--gutter); }
+
+  @media (max-width: 900px) {
+    .feature { grid-template-columns: 1fr; }
+    .cover img { aspect-ratio: 16 / 9; }
+  }
+  @media (max-width: 480px) {
+    .cta { justify-items: stretch; align-self: stretch; }
+    .cta :global(.buy) { justify-content: space-between; }
+    .links { flex-direction: column; gap: 4px; }
+  }
+</style>

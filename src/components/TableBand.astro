@@ -1,0 +1,51 @@
+---
+// The rust band listing the games I run, used on the home and Tabletop pages.
+import Arrow from './Arrow.astro';
+
+interface Props { heading?: string; }
+const { heading = 'The games I run' } = Astro.props;
+
+const systems = ['Dungeons & Dragons', 'World of Darkness', 'Powered by the Apocalypse'];
+---
+<section class="table" aria-labelledby="table-h">
+  <h2 id="table-h" class="visually-hidden">{heading}</h2>
+  <ul class="systems">
+    {systems.map((s) => <li>{s}</li>)}
+  </ul>
+  <div class="lower">
+    <div class="table-copy">
+      <p>
+        I run long-form campaigns online, bringing the same craft I brought to video games:
+        smart pacing; deep player motivation; and worlds that are believable, immersive and responsive.
+      </p>
+      <a class="action" href="/tabletop/at-the-table/">How to join a game <Arrow /></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .table {
+    background: var(--rust);
+    color: var(--stock);
+    padding: clamp(48px, 7vw, 96px) var(--gutter);
+    display: grid;
+    gap: 32px;
+  }
+  .systems {
+    list-style: none; padding: 0;
+    display: grid; gap: 0.06em;
+    font: 900 clamp(2.75rem, 7vw, 6rem)/0.95 var(--display);
+    text-transform: uppercase;
+  }
+  /* One stock rule, then the invitation to join. */
+  .lower {
+    display: grid; gap: 36px clamp(32px, 6vw, 96px); align-items: start;
+    border-top: 2px solid var(--stock); padding-top: 24px;
+  }
+  /* The action follows its sentence, as in the ledgers. */
+  .table-copy { display: grid; gap: 20px; justify-items: start; }
+  .table-copy p { font-size: 1.25rem; max-width: 52ch; }
+  .table-copy .action:hover { color: var(--ochre); }
+  .table :focus-visible { outline-color: var(--stock); }
+
+</style>

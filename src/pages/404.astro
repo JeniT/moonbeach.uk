@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Arrow from '../components/Arrow.astro';
+---
+<Base title="Page not found">
+  <PageHead title="Lost in<br><span>the stacks</span>" lede="That page isn’t here. Even Piranesi’s staircases lead somewhere eventually." focus="50% 95%" />
+  <section class="back">
+    <a class="action" href="/">Back to the start <Arrow /></a>
+  </section>
+</Base>
+
+<style>
+  .back { padding: clamp(48px, 7vw, 96px) var(--gutter); }
+  .action { color: var(--rust); }
+</style>

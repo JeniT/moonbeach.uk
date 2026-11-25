@@ -1,0 +1,98 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHead from '../../../components/PageHead.astro';
+import FeaturedAdventure from '../../../components/FeaturedAdventure.astro';
+import Arrow from '../../../components/Arrow.astro';
+import { getCollection } from 'astro:content';
+
+const adventures = (await getCollection('adventures', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order);
+// The first adventure with a page of its own is featured; the rest with pages are listed under it.
+const more = adventures.filter((a) => !a.data.comingSoon).slice(1);
+const soon = adventures.filter((a) => a.data.comingSoon);
+const lists = [
+  { id: 'more', heading: 'More adventures', items: more },
+  { id: 'soon', heading: 'Worlds in progress', items: soon },
+].filter((l) => l.items.length > 0);
+---
+<Base title="For the table" description="Role-playing adventures written by Bill Beacham, for his own tables and for other game masters to run.">
+  <PageHead
+    title="For the<br><span>table</span>"
+    lede="Campaigns and scenarios I’ve written for my own tables, prepared for other game masters to run."
+    focus="30% 70%"
+  />
+
+  <FeaturedAdventure bleed={false} />
+
+  {lists.map((list) => (
+    <section class="list" aria-labelledby={`${list.id}-h`}>
+      <h2 id={`${list.id}-h`}>{list.heading}</h2>
+      <ul>
+        {list.items.map((a) => {
+          const href = `/tabletop/for-the-table/${a.id}/`;
+          return (
+            <li class:list={{ 'has-cover': a.data.cover }}>
+              {a.data.cover && (a.data.comingSoon
+                ? <img src={a.data.cover.src} alt={a.data.cover.alt} loading="lazy" />
+                : <a href={href} tabindex="-1" aria-hidden="true"><img src={a.data.cover.src} alt="" loading="lazy" /></a>)}
+              <div>
+                <span class="meta">{[a.data.system, a.data.level, a.data.comingSoon ? null : a.data.status].filter(Boolean).join(' · ')}</span>
+                <h3>{a.data.comingSoon ? a.data.title : <a href={href}>{a.data.title}</a>}</h3>
+                <p>{a.data.summary}</p>
+                {a.data.comingSoon
+                  ? <span class="stamp">Coming soon</span>
+                  : <a class="action" href={href}>About the adventure <Arrow /></a>}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+
+  <section class="ask" aria-labelledby="ask-h">
+    <h2 id="ask-h">Want to play one?</h2>
+    <p>I can run my adventures online for your group. Tell me which one interests you, how many players, and when you can play.</p>
+    <div class="ask-actions">
+      <a class="action" href="mailto:bill.beacham@gmail.com?subject=Playing%20one%20of%20your%20adventures">Email me <Arrow /></a>
+      <a class="action" href="/tabletop/at-the-table/">How my games work, at the table <Arrow /></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .list { padding: 0 var(--gutter) clamp(48px, 7vw, 96px); }
+  .list + .list { padding-top: clamp(8px, 2vw, 24px); }
+  h2 { font-size: clamp(2.75rem, 5vw, 4rem); padding-bottom: 14px; border-bottom: var(--rule); }
+  ul { list-style: none; padding: 0; }
+  li {
+    display: grid; gap: 20px clamp(24px, 4vw, 56px); align-items: start;
+    padding: 32px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  }
+  li > div { display: grid; gap: 10px; align-content: start; }
+  .has-cover { grid-template-columns: minmax(140px, 16rem) minmax(0, 1fr); }
+  .has-cover img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 30%; background: var(--ink); }
+  @media (max-width: 640px) {
+    .has-cover { grid-template-columns: 1fr; }
+    .has-cover img { aspect-ratio: 4 / 3; max-width: 28rem; }
+  }
+  .meta { font: 700 1.125rem/1 var(--display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rust); }
+  h3 { font-size: clamp(2.25rem, 4vw, 3.25rem); }
+  h3 a { text-decoration: none; }
+  h3 a:hover { color: var(--rust); }
+  li p { max-width: 60ch; font-size: 1.1875rem; line-height: 1.5; }
+  .action { color: var(--rust); justify-self: start; margin-top: 8px; }
+  .ask { background: var(--rust); color: var(--stock); padding: clamp(48px, 7vw, 96px) var(--gutter); }
+  .ask h2 { font-size: clamp(3rem, 6.5vw, 5.5rem); padding: 0; border: 0; }
+  .ask p { font-size: 1.25rem; max-width: 52ch; margin: 18px 0 24px; }
+  .ask-actions { display: flex; flex-wrap: wrap; gap: 14px 40px; }
+  .ask .action { color: var(--stock); }
+  .ask .action:hover { color: var(--ochre); }
+  .ask :focus-visible { outline-color: var(--stock); }
+  .stamp {
+    justify-self: start; margin-top: 8px;
+    font: 700 1.125rem/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-soft); border: 2px solid currentColor; padding: 8px 12px;
+  }
+</style>
