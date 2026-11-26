@@ -4,15 +4,85 @@
     "role": "Design Director",
     "from": 2012,
     "to": 2026,
-    "summary": "Design and narrative direction across externally developed games in Square Enix-owned IP, overseeing several franchises at once. Built and led a team of design and narrative specialists; pitched projects to Square Enix leadership and platform holders.",
+    "summary": "Studio leadership role providing design and narrative direction across externally developed games in Square Enix-owned IP, overseeing multiple franchises simultaneously. Built and led a team of design and narrative specialists; pitched and evangelised projects to Square Enix leadership and platform holders.",
     "games": [
       {
         "title": "Life is Strange: Reunion",
-        "year": 2026
+        "year": 2026,
+        "featured": true,
+        "detail": {
+          "developer": "Deck Nine",
+          "publisher": "Square Enix",
+          "blurb": "The long-awaited return of the iconic Chloe Price to 'Life is Strange', and a last chance to play as both her and BFF Max Caulfield.",
+          "part": "Design direction from the publisher side, on the launch game and its Worldslayer expansion, using live player data to look past forum noise to what players were actually doing.",
+          "stats": [
+            {
+              "value": "88%",
+              "label": "user rating on Steam (Very Positive)"
+            },
+            {
+              "value": "The Game Awards",
+              "label": "Nominee, Games for Impact, 2026"
+            },
+            {
+              "value": "80",
+              "label": "Metacritic (Xbox)"
+            }
+          ],
+          "sources": [
+            {
+              "label": "Steam",
+              "url": "https://store.steampowered.com/app/2624870/Life_is_Strange_Reunion/"
+            },
+            {
+              "label": "The Game Awards",
+              "url": "https://thegameawards.com/categories/games-for-impact?__cf_chl_tk=nG2BKIy1rY1zMz4Qt3r9.NMCRPAGROukDVthhEvUJqo-1795619833-1.0.1.1-GGrfj4xmN9yyedjr4anbCXs2F44vVmWcKW9KpjpDW8g/"
+            },
+            {
+              "label": "Metacritic",
+              "url": "https://www.metacritic.com/game/life-is-strange-reunion/critic-reviews/?platform=xbox-series-x"
+            }
+          ]
+        }
       },
       {
         "title": "Life is Strange: Double Exposure",
-        "year": 2024
+        "year": 2024,
+        "featured": true,
+       "detail": {
+          "developer": "Deck Nine",
+          "publisher": "Square Enix",
+          "blurb": "Max Caulfield is finally back in the first of a 2-game story arc that introduces new powers, new companions, and new heart-breaking choices & consequences.",
+          "part": "Design direction from the publisher side, on the launch game and its Worldslayer expansion, using live player data to look past forum noise to what players were actually doing.",
+          "stats": [
+                       {
+              "value": "Game Developers Choice Awards",
+              "label": "Social Impact, 2025"
+            },
+            {
+              "value": "GLAAD Media Awards",
+              "label": "Outstanding Video Game, 2025"
+            },
+            {
+              "value": "9/10",
+              "label": "IGN"
+            }
+          ],
+          "sources": [
+            {
+              "label": "Wikipedia",
+              "url": "https://en.wikipedia.org/wiki/25th_Game_Developers_Choice_Awards/"
+            },
+            {
+              "label": "GLAAD",
+              "url": "https://glaad.org/glaad-celebrates-outstanding-video-game-nominees-at-the-36th-annual-glaad-media-awards-glaadawards/"
+            },
+            {
+              "label": "IGN",
+              "url": "https://www.ign.com/articles/life-is-strange-double-exposure-review/"
+            }
+          ]
+        } 
       },
       {
         "title": "Outriders Worldslayer",
@@ -29,8 +99,8 @@
         "detail": {
           "developer": "People Can Fly",
           "publisher": "Square Enix",
-          "blurb": "A co-operative RPG shooter, and a new IP, that drew millions of players in its first weeks.",
-          "part": "Design direction from the publisher side, on the launch game and its Worldslayer expansion, using live player data to look past forum noise to what players were actually doing.",
+          "blurb": "A co-operative RPG looter-shooter, and a new IP, that drew millions of players in its first weeks.",
+          "part": "Design direction for the publisher, from concept to release, on both the original game and its Worldslayer expansion, where I used live player data to look past forum 'noise' to see what players were actually doing.",
           "stats": [
             {
               "value": "3.5M",
@@ -41,8 +111,8 @@
               "label": "hours average play per player"
             },
             {
-              "value": "73",
-              "label": "Metacritic for Worldslayer (PC)"
+              "value": "100,000+",
+              "label": "Peak concurrent players on Steam"
             }
           ],
           "sources": [
@@ -53,6 +123,10 @@
             {
               "label": "Metacritic",
               "url": "https://www.metacritic.com/game/outriders-worldslayer/"
+               },
+            {
+              "label": "Eurogamer",
+              "url": "https://www.eurogamer.net/outriders-launch-dwarves-marvels-avengers/"
             }
           ]
         }
@@ -80,8 +154,8 @@
         "detail": {
           "developer": "Avalanche Studios",
           "publisher": "Square Enix",
-          "blurb": "Open-world chaos with a grappling hook, parachute and wingsuit, in one of Square Enix’s biggest action franchises.",
-          "part": "Design direction from the publisher side on Just Cause 3 and Just Cause 4, defining what made the series work and evolving it without losing it.",
+          "blurb": "Explosive open-world chaos with a grappling hook, parachute and wingsuit, in one of Square Enix’s biggest action franchises.",
+          "part": "Design direction from the publisher side on Just Cause 3 and Just Cause 4, elevating and evolving gameplay to balance familiarity and innovation.",
           "stats": [
             {
               "value": "26M+",
@@ -111,13 +185,13 @@
       {
         "title": "Life is Strange",
         "year": 2015,
-        "note": "Pitched the original game, then helped grow it into a seven-title franchise over twelve years.",
+        "note": "Pitched the original game to Square Enix West CEO, then helped grow it into a seven-title franchise over twelve years.",
         "featured": true,
         "detail": {
           "developer": "Dontnod Entertainment",
           "publisher": "Square Enix",
-          "blurb": "An episodic story about time, friendship and consequence that became one of the defining narrative games of its decade.",
-          "part": "Oversaw design and narrative direction from the publisher side, across the original and the series that grew from it.",
+          "blurb": "A groundbreaking episodic story about friendship, nostalgia, loss, and consequence that became one of the defining narrative games of its generation.",
+          "part": "Oversaw design and narrative direction from the publisher side, across both the original and the series that it established.",
           "stats": [
             {
               "value": "20M+",
@@ -163,25 +237,25 @@
     "role": "Games Designer",
     "from": 2009,
     "to": 2012,
-    "summary": "Consultant designer on externally developed games: setting vision, goals and benchmarks, reviewing milestones and running focus groups and user testing.",
+    "summary": "Consultant designer on externally developed games: setting vision, goals and benchmarks; reviewing milestones; and running focus groups and user testing.",
     "games": [
       {
         "title": "Lara Croft and the Guardian of Light",
         "year": 2010,
         "featured": true,
         "detail": {
-          "developer": "Crystal Dynamics",
+          "developer": "Crystal Dynamics, Feral Interactive",
           "publisher": "Square Enix",
-          "blurb": "Lara reinvented as a co-operative, top-down action puzzler: a bold, downloadable spin on Tomb Raider.",
-          "part": "Consultant designer at Square Enix London Studios.",
+          "blurb": "Tomb Raider reinvented as a co-operative, top-down twin-stick shooter and action puzzler.",
+          "part": "Consultant designer at Square Enix London Studios, working with a co-dev studio to adapt controls and level design for the iOS platform.",
           "stats": [
             {
               "value": "85",
               "label": "Metacritic (Xbox 360)"
             },
             {
-              "value": "1M+",
-              "label": "copies sold across platforms by 2013"
+              "value": "4.7/5",
+              "label": "User Rating Apple store"
             }
           ],
           "sources": [
@@ -190,8 +264,8 @@
               "url": "https://www.metacritic.com/game/lara-croft-and-the-guardian-of-light/"
             },
             {
-              "label": "Wikipedia",
-              "url": "https://en.wikipedia.org/wiki/Lara_Croft_and_the_Guardian_of_Light"
+              "label": "Apple",
+              "url": "https://apps.apple.com/us/app/lara-croft-guardian-of-light/id6502455111/"
             }
           ]
         }
@@ -203,7 +277,7 @@
     "role": "Games Designer",
     "from": 2006,
     "to": 2009,
-    "summary": "Consultant designer on internal and external projects, evolving existing franchises and developing new ones; presenting projects at greenlight.",
+    "summary": "Consultant designer on internal and external projects, ensuring overall game quality as we evolved existing franchises & developed new ones.",
     "games": [
       {
         "title": "Deus Ex: Human Revolution",
@@ -213,7 +287,7 @@
           "developer": "Eidos Montréal",
           "publisher": "Square Enix",
           "blurb": "The return of a landmark series: a cyberpunk immersive sim about choice, augmentation and who gets to be human.",
-          "part": "Consultant designer during development at Eidos.",
+          "part": "Consultant designer during concept development at Eidos.",
           "stats": [
             {
               "value": "89",
@@ -255,8 +329,8 @@
               "label": "World Record: most critically acclaimed superhero game"
             },
             {
-              "value": "4.3M",
-              "label": "copies sold worldwide by 2011"
+              "value": "8.05M",
+              "label": "copies sold worldwide by 2017"
             }
           ],
           "sources": [
@@ -267,6 +341,10 @@
             {
               "label": "Wikipedia",
               "url": "https://en.wikipedia.org/wiki/Batman:_Arkham_Asylum"
+             },
+            {
+              "label": "Guiness",
+              "url": "https://www.guinnessworldrecords.com/world-records/384739-best-selling-batman-videogame/"
             }
           ]
         }
@@ -298,7 +376,7 @@
     "role": "Lead Designer and Senior Producer",
     "from": 1997,
     "to": 2006,
-    "summary": "Design and production together, from pitch to release: design documents, levels and encounters, game systems and enemy AI, balancing, project management and platform submission. Grew from a 20-person team to leading 40.",
+    "summary": "Design and production combined, from pitch to release: design documents, levels and encounters, game systems and enemy AI, balancing, project management, external relations, and platform submission. Grew from a 20-person team to leading 40.",
     "games": [
       {
         "title": "Predator: Concrete Jungle",
@@ -311,12 +389,12 @@
         "detail": {
           "developer": "Eurocom (console versions)",
           "publisher": "Electronic Arts",
-          "blurb": "An original Bond adventure, with Pierce Brosnan’s likeness, built to feel like the films.",
-          "part": "At Eurocom, leading a design team built largely from former QA testers, working within the 007 franchise bible and directly with the IP holders.",
+          "blurb": "An original Bond adventure with cinematic single player camapaign and thrilling multiplayer modes.",
+          "part": "Dual design and production leadership roles, including writing the GDD, working directly with the IP holders, and relationship management with publisher and co-developers.",
           "stats": [
             {
               "value": "5M",
-              "label": "copies sold across platforms within a year"
+              "label": "copies sold across platforms within 1st year"
             },
             {
               "value": "80",
@@ -351,7 +429,7 @@
           "developer": "Eurocom",
           "publisher": "GT Interactive",
           "blurb": "Duke Nukem 3D rebuilt for the Nintendo 64, with four-player split-screen and co-op.",
-          "part": "One of my first games at Eurocom, the start of a run on Duke Nukem that continued with Zero Hour.",
+          "part": "One of my first games at Eurocom, the start of a run on Duke Nukem that continued with Zero Hour. I converted and adapted levels for the new platform, and handled game submissions to Nintendo.",
           "stats": [
             {
               "value": "73",

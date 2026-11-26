@@ -4,7 +4,7 @@ system: "D&D 5e"
 status: In progress
 level: "Characters of 3rd–4th level"
 setting: "The Northern Borderlands"
-summary: "A campaign in a gritty, superstitious feudal borderland, where rival rulers – the Baron of Cawthorne and the Earl of Nancarrow – vie for power, and the drowned dead rise from the rivers."
+summary: "A player-driven campaign in a gritty, superstitious feudal borderland, where rival rulers vie for power, and the drowned dead rise from the rivers."
 hook:
   - "A struggling ruler beset by strife on all sides."
   - "A castle breached, an heirloom stolen."
@@ -30,7 +30,7 @@ guide:
     - "An introduction to the Northern Borderlands and the background to the plot"
     - "A map of the commonly known locations"
     - "Guidance on creating new characters, or bringing in existing ones"
-    - "Settlements, criminal organisations and faiths to tie your character to"
+    - "Settlements, criminal organisations and faiths to be part of"
     - "The Drowner Curse, and how to travel and camp safely"
     - "Starting equipment, magical and necromantic treasures, and the Black Market"
 store: "DriveThruRPG"   # add buyUrl: https://www.drivethrurpg.com/... once it's on sale
@@ -49,4 +49,4 @@ The tone and setting are inspired by the classic British roleplaying games of th
 
 A month ago, the Baron's heirloom blade was stolen from the family vault beneath Caerhays Keep. Three weeks ago, his only son and heir, Felix, was struck down by elf-shot while hunting in the Forest of Shadows, and still lies in an unbreakable sleep. Undead soldiers have marched south to raid the Barony, and the Drowners grow bolder every night.
 
-A week ago, assailed on every side and stricken by the fall of his son, Baron Rinduran Cawthorne sent out a call for help from any possible quarter. Your characters are among those who answered.
+A week ago, assailed on every side and stricken by the fall of his son, Baron Rinduran Cawthorne sent out a call for help from any possible quarter, and your characters have answered. Now play on to find out what happens next.

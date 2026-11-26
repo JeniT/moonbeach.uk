@@ -4,6 +4,7 @@ date: 2026-11-12
 kind: reflection
 summary: "For most of my career, my job has been to tell talented people what isn't working yet. Here's what I've learned about doing that well."
 tags: [video-games]
+draft: true
 ---
 
 For nearly twenty years, a large part of my job has been reviewing other people's games and telling them what isn't working yet. I've done it from the publisher's side of the table at Eidos and Square Enix, with game directors, lead designers, creative directors, art directors and studio heads, on everything from single-page vision statements to near-final shipping builds.
