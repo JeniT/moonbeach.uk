@@ -11,10 +11,10 @@
         "year": 2026,
         "featured": true,
         "detail": {
-          "developer": "Deck Nine",
+          "developer": "Deck Nine, Brass Token",
           "publisher": "Square Enix",
           "blurb": "The long-awaited return of the iconic Chloe Price to 'Life is Strange', and a last chance to play as both her and BFF Max Caulfield.",
-          "part": "Design direction from the publisher side, on the launch game and its Worldslayer expansion, using live player data to look past forum noise to what players were actually doing.",
+          "part": "Design and creative direction from the publisher side, working directly with the desgin, narrative, art, audio and tech leads at Deck Nine.",
           "stats": [
             {
               "value": "88%",
@@ -53,10 +53,10 @@
           "developer": "Deck Nine",
           "publisher": "Square Enix",
           "blurb": "Max Caulfield is finally back in the first of a 2-game story arc that introduces new powers, new companions, and new heart-breaking choices & consequences.",
-          "part": "Design direction from the publisher side, on the launch game and its Worldslayer expansion, using live player data to look past forum noise to what players were actually doing.",
+          "part": "Design direction from the publisher side, overseeing design and narrative feedback from my team; relationship management & franchise planning.",
           "stats": [
                        {
-              "value": "Game Developers Choice Awards",
+              "value": "Game Dev Choice Awards",
               "label": "Social Impact, 2025"
             },
             {
@@ -185,13 +185,12 @@
       {
         "title": "Life is Strange",
         "year": 2015,
-        "note": "Pitched the original game to Square Enix West CEO, then helped grow it into a seven-title franchise over twelve years.",
         "featured": true,
         "detail": {
           "developer": "Dontnod Entertainment",
           "publisher": "Square Enix",
           "blurb": "A groundbreaking episodic story about friendship, nostalgia, loss, and consequence that became one of the defining narrative games of its generation.",
-          "part": "Oversaw design and narrative direction from the publisher side, across both the original and the series that it established.",
+          "part": "Pitched the original game to Square Enix West CEO. Oversaw design and narrative direction from the publisher side, across both the original and the series that it established.",
           "stats": [
             {
               "value": "20M+",
@@ -286,8 +285,8 @@
         "detail": {
           "developer": "Eidos Montréal",
           "publisher": "Square Enix",
-          "blurb": "The return of a landmark series: a cyberpunk immersive sim about choice, augmentation and who gets to be human.",
-          "part": "Consultant designer during concept development at Eidos.",
+          "blurb": "The return of a landmark series: a cyberpunk adventure in an immersive world about who gets to be human.",
+          "part": "Consultant designer during concept development at Eidos, establishing core deisgn, systems, and narrative arc.",
           "stats": [
             {
               "value": "89",
@@ -317,8 +316,8 @@
         "detail": {
           "developer": "Rocksteady Studios",
           "publisher": "Eidos Interactive and Warner Bros.",
-          "blurb": "The game that showed how good a superhero game could be: tight combat, stealth and a Metroidvania Arkham.",
-          "part": "Consultant designer at Eidos, the game’s co-publisher.",
+          "blurb": "The game that finally showed how good a superhero game could be: genre-defining combat and empowered stealth in a Metroidvania Arkham playground.",
+          "part": "Consultant designer at Eidos, the game’s co-publisher, working with the team at Rocksteady to push the boundaries of what was possible.",
           "stats": [
             {
               "value": "92",
