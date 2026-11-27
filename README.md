@@ -19,6 +19,7 @@ npm run build      # writes the finished site to dist/
 | An adventure | Copy `src/content/adventures/_example.md` the same way. It appears on the For the table page. Set `comingSoon: true` to list it under "Worlds in progress" without a page of its own. Add `store: "DriveThruRPG"` to show "Coming soon to DriveThruRPG", then `buyUrl` once it's on sale to turn that into a "Buy it on DriveThruRPG" button. |
 | A game to the portfolio | Edit `src/data/career.json`. `"featured": true` puts a title on the home page; `"note"` adds a line under it. A game with a `"detail"` block gets a panel that slides open on the Games page. |
 | A picture printed in the site's four inks | `npm run ink -- path/to/picture.jpg` saves it to `public/art/picture.webp`. `--light 0.6` lightens it (default 0.72), `--width 900` sets the size. Best on engravings and line art. |
+| A PDF exported from PowerPoint (e.g. a player's guide) | PowerPoint puts "Slide 3: " in front of every bookmark. On Windows, drag the PDF onto `Tidy a PDF.bat`; anywhere else, `npm run tidy-pdf -- "path/to/guide.pdf"`. It fixes the file in place (add a second file name to save a copy instead), then copy it into `public/downloads/`. |
 | A screenshot or cover to a game panel | Put the image in `public/games/` and add `"image": { "src": "/games/file.jpg", "alt": "What it shows", "credit": "© Publisher" }` inside that game's `"detail"`. |
 
 Files whose names start with `_` are ignored, so the examples never appear on the site.
