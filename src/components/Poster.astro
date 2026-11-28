@@ -38,7 +38,7 @@ const { art = 'drawbridge', imprint, lineOne, lineTwo, doors } = Astro.props;
     min-height: 600px;
     max-height: 1000px;
   }
-  .sheet { position: relative; min-height: 0; }
+  .sheet { position: relative; min-height: 0; overflow: hidden; }
   .imprint {
     position: absolute; right: 0; bottom: 0;
     background: var(--ink); color: var(--stock);
@@ -77,8 +77,9 @@ const { art = 'drawbridge', imprint, lineOne, lineTwo, doors } = Astro.props;
     .door:first-of-type { border-left: 0; }
   }
   @media (max-width: 700px) {
-    /* A shorter plate so both doors show on a phone's first screen. */
-    .poster { height: auto; min-height: 0; max-height: none; grid-template-rows: 34svh auto; }
+    /* A shorter plate so both doors show on a phone's first screen,
+       but never shorter than the plate's own minimum (260px), or it spills over the headline. */
+    .poster { height: auto; min-height: 0; max-height: none; grid-template-rows: max(260px, 34svh) auto; }
     .bar { grid-template-columns: 1fr; }
     .door { border-left: 0; border-top: 2px solid var(--stock); padding-block: 18px; gap: 6px; }
     .door h2 { font-size: 2rem; }
